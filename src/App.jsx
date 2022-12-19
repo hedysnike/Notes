@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import "./index.css";
+import Modal from "./Modal";
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
   const [items, setItems] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   function addItem() {
     setItems([...items, currentItemValue]);
@@ -11,12 +14,13 @@ export default function App() {
 
   return (
     <div>
-      <div className="bg-black h-screen ">
+      <Modal open={openModal} onClose={() => setOpenModal(false)} />
+      <div className="bg-black h-screen">
         <div className="flex justify-center">
           <textarea
             type="text"
             value={currentItemValue}
-            className="mt-16 w-96 py-1 px-3 outline-none shadow-slate-800 shadow-md rounded-lg bg-slate-700 text-white border border-solid border-transparent"
+            className="mt-16 w-96 py-1 px-3 outline-none shadow-[#100F0F]  shadow-md rounded-lg bg-white  text-black border border-solid border-transparent"
             placeholder="Take a note..."
             onChange={(e) => {
               setCurrentItemValue(e.target.value);
@@ -34,8 +38,14 @@ export default function App() {
         <div className="grid justify-center text-white mt-10 grid-cols-4">
           {items.map((i) => {
             return (
-              <div className="p-4 border border-solid border-gray-[dadce0] m-10 pb-10 rounded-xl">
-              <p> <pre>{i}</pre></p>
+              <div
+                className="p-4 bg-[#100F0F] m-10 pb-10 rounded-xl"
+                onClick={() => setOpenModal(true)}
+              >
+                <p>
+                  {" "}
+                  <pre>{i}</pre>
+                </p>
               </div>
             );
           })}
