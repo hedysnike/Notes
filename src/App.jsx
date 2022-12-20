@@ -8,7 +8,7 @@ export default function App() {
   const [openModal, setOpenModal] = useState(false);
 
   function addItem() {
-    setItems([...items, currentItemValue]);
+    setItems([currentItemValue, ...items]);
     setCurrentItemValue("");
   }
 
