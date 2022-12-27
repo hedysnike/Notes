@@ -1,6 +1,20 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./index.css";
 import Modal from "./Modal";
+import {
+  DndContext,
+  useSensor,
+  useSensors,
+  PointerSensor,
+  closestCenter,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -8,7 +22,7 @@ export default function App() {
   const [openModal, setOpenModal] = useState(false);
 
   function addItem() {
-    setItems([currentItemValue, ...items]);
+    setItems([currentItemValue, , ...items]);
     setCurrentItemValue("");
   }
 
@@ -20,7 +34,7 @@ export default function App() {
           <textarea
             type="text"
             value={currentItemValue}
-            className="mt-16 w-96 py-1 px-3 outline-none shadow-[#100F0F]  shadow-md rounded-lg bg-white  text-black border border-solid border-transparent"
+            className="mt-16 w-96 py-1 px-3 outline-none shadow-[#100F0F] shadow-md rounded-lg bg-white  text-black border border-solid border-transparent"
             placeholder="Take a note..."
             onChange={(e) => {
               setCurrentItemValue(e.target.value);
@@ -35,22 +49,63 @@ export default function App() {
             Add
           </button>
         </div>
-        <div className="grid justify-center text-white mt-10 grid-cols-4">
-          {items.map((i) => {
-            return (
-              <div
-                className="p-4 bg-[#100F0F] m-10 pb-10 rounded-xl"
-                onClick={() => setOpenModal(true)}
-              >
-                <p>
-                  {" "}
-                  <pre>{i}</pre>
-                </p>
-              </div>
-            );
-          })}
-        </div>
+        <Items items={items} setItems={setItems} setOpenModal={setOpenModal} />
       </div>
     </div>
+  );
+}
+
+export function Item(props) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: props.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      className="p-4 bg-[#100F0F] m-10 pb-10 rounded-xl text-white"
+      style={style}
+      {...attributes}
+      {...listeners}
+    >
+      {props.description}
+    </div>
+  );
+}
+
+function Items({ items, setItems, setOpenModal }) {
+  const sensors = useSensors(useSensor(PointerSensor));
+
+  function handleDragEnd(event) {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      setItems((items) => {
+        const oldIndex = items.indexOf(active.id);
+        const newIndex = items.indexOf(over.id);
+
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  }
+
+  return (
+    <DndContext
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext items={items} strategy={verticalListSortingStrategy}>
+        <div>
+          {items.map((i) => (
+            <Item id={i} key={i} description={i} />
+          ))}
+        </div>
+      </SortableContext>
+    </DndContext>
   );
 }
