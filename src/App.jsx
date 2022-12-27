@@ -13,6 +13,7 @@ import {
   verticalListSortingStrategy,
   useSortable,
   arrayMove,
+  rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -22,7 +23,7 @@ export default function App() {
   const [openModal, setOpenModal] = useState(false);
 
   function addItem() {
-    setItems([currentItemValue, , ...items]);
+    setItems([currentItemValue, ...items]);
     setCurrentItemValue("");
   }
 
@@ -99,8 +100,8 @@ function Items({ items, setItems, setOpenModal }) {
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
-      <SortableContext items={items} strategy={verticalListSortingStrategy}>
-        <div>
+      <SortableContext items={items} strategy={rectSortingStrategy}>
+        <div className="grid grid-cols-4">
           {items.map((i) => (
             <Item id={i} key={i} description={i} />
           ))}
