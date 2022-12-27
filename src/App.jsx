@@ -20,16 +20,31 @@ import { CSS } from "@dnd-kit/utilities";
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
   const [items, setItems] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
 
   function addItem() {
-    setItems([currentItemValue, ...items]);
+    setItems([
+      {
+        id: Math.random().toString(36).substr(2, 9),
+        description: currentItemValue,
+      },
+      ...items,
+    ]);
     setCurrentItemValue("");
+  }
+
+  function updateItem(id, description) {
+    setItems(
+      items.map((item) => {
+        if (item.id === id) {
+          return { ...item, description };
+        }
+        return item;
+      })
+    );
   }
 
   return (
     <div>
-      <Modal open={openModal} onClose={() => setOpenModal(false)} />
       <div className="bg-black h-screen">
         <div className="flex justify-center">
           <textarea
@@ -50,7 +65,7 @@ export default function App() {
             Add
           </button>
         </div>
-        <Items items={items} setItems={setItems} setOpenModal={setOpenModal} />
+        <Items items={items} setItems={setItems} updateItem={updateItem} />
       </div>
     </div>
   );
@@ -69,6 +84,7 @@ export function Item(props) {
     <div
       ref={setNodeRef}
       className="p-4 bg-[#100F0F] m-10 pb-10 rounded-xl text-white"
+      onClick={props.onClick}
       style={style}
       {...attributes}
       {...listeners}
@@ -78,8 +94,13 @@ export function Item(props) {
   );
 }
 
-function Items({ items, setItems, setOpenModal }) {
-  const sensors = useSensors(useSensor(PointerSensor));
+function Items({ items, setItems, updateItem }) {
+  const [openModal, setOpenModal] = useState(false);
+  const [activeItem, setActiveItem] = useState();
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
+  );
 
   function handleDragEnd(event) {
     const { active, over } = event;
@@ -101,9 +122,29 @@ function Items({ items, setItems, setOpenModal }) {
       onDragEnd={handleDragEnd}
     >
       <SortableContext items={items} strategy={rectSortingStrategy}>
+        <Modal open={openModal} onClose={() => setOpenModal(false)}>
+          <textarea
+            name=""
+            id=""
+            cols="30"
+            rows="10"
+            onChange={(e) => updateItem(activeItem.id, e.currentTarget.value)}
+          >
+            {activeItem?.description}
+          </textarea>
+        </Modal>
         <div className="grid grid-cols-4">
           {items.map((i) => (
-            <Item id={i} key={i} description={i} />
+            <Item
+              id={i.id}
+              key={i.id}
+              description={i.description}
+              onClick={() => {
+                console.log("clicked", i);
+                setOpenModal(true);
+                setActiveItem(i);
+              }}
+            />
           ))}
         </div>
       </SortableContext>
