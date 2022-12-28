@@ -107,10 +107,12 @@ function Items({ items, setItems, updateItem }) {
 
     if (active.id !== over.id) {
       setItems((items) => {
-        const oldIndex = items.indexOf(active.id);
-        const newIndex = items.indexOf(over.id);
+        const oldIndex = items.findIndex((i) => i.id === active.id);
+        const newIndex = items.findIndex((i) => i.id === over.id);
 
-        return arrayMove(items, oldIndex, newIndex);
+        const newArr = arrayMove(items, oldIndex, newIndex);
+
+        return newArr;
       });
     }
   }
