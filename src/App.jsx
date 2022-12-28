@@ -88,7 +88,9 @@ export function Item(props) {
       {...attributes}
       {...listeners}
     >
-      {props.description}
+      <p>
+        <pre>{props.description}</pre>
+      </p>
     </div>
   );
 }
@@ -126,11 +128,17 @@ function Items({ items, setItems, updateItem }) {
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <div
             cols="30"
+            spellcheck="true"
             contenteditable="true"
             rows="10"
-            onInput={(e) => updateItem(activeItem.id, e.currentTarget.textContent)}
+            className="outline-none"
+            onInput={(e) =>
+              updateItem(activeItem.id, e.currentTarget.textContent)
+            }
           >
-            {activeItem?.description}
+            <p>
+              <pre>{activeItem?.description}</pre>
+            </p>
           </div>
         </Modal>
         <div className="grid grid-cols-5">
