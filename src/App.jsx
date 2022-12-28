@@ -19,12 +19,9 @@ import { CSS } from "@dnd-kit/utilities";
 
 const { TextArea } = Input;
 
-
-
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
   const [items, setItems] = useState([]);
-
 
   function addItem() {
     setItems([
@@ -57,8 +54,8 @@ export default function App() {
             autoSize={{
               minRows: 2,
               maxRows: 18,
-            }}          
-            className="mt-16 w-96 py-2 shadow-green-900 shadow-md rounded-lg bg-white text-black"
+            }}
+            className="mt-16 w-96 text-sm py-2 shadow-green-900 shadow-md rounded-lg bg-white text-black"
             placeholder="Take a note..."
             onChange={(e) => {
               setCurrentItemValue(e.target.value);
@@ -91,7 +88,7 @@ export function Item(props) {
   return (
     <div
       ref={setNodeRef}
-      className="p-4 bg-[#100F0F] m-3 pb-7 rounded-xl text-white whitespace-pre-wrap"
+      className="p-4 bg-[#100F0F] m-3 pb-7 rounded-xl text-white whitespace-pre-wrap text-sm"
       onClick={props.onClick}
       style={style}
       {...attributes}
