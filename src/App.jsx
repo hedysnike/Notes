@@ -15,7 +15,7 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Textarea } from '@nextui-org/react';
+import { Textarea } from "@nextui-org/react";
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -54,7 +54,9 @@ export default function App() {
             width="400px"
             className="mt-16 py-1 px-3 shadow-green-900 shadow-md rounded-lg bg-white text-red-600 "
             placeholder="Take a note..."
-            onChange={(e) => { setCurrentItemValue(e.target.value); }}
+            onChange={(e) => {
+              setCurrentItemValue(e.target.value);
+            }}
             cacheMeasurements={false}
           />
           <button
@@ -135,7 +137,7 @@ function Items({ items, setItems, updateItem }) {
             {activeItem?.description}
           </div>
         </Modal>
-        <div className="grid grid-cols-5">
+        <div className="grid md:grid grid-cols-2 md:grid-cols-5">
           {items.map((i) => (
             <Item
               id={i.id}

@@ -12,6 +12,7 @@ specifiers:
   autoprefixer: ^10.4.13
   nanoid: ^4.0.0
   postcss: ^8.4.20
+  project-notes: 'link:'
   react: ^18.2.0
   react-beautiful-dnd: ^13.1.1
   react-dom: ^18.2.0
@@ -25,6 +26,7 @@ dependencies:
   '@headlessui/react': 1.7.7_biqbaboplfbrettd7655fr4n2y
   '@nextui-org/react': 1.0.0-beta.11_biqbaboplfbrettd7655fr4n2y
   nanoid: 4.0.0
+  project-notes: 'link:'
   react: 18.2.0
   react-beautiful-dnd: 13.1.1_biqbaboplfbrettd7655fr4n2y
   react-dom: 18.2.0_react@18.2.0
