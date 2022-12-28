@@ -82,15 +82,13 @@ export function Item(props) {
   return (
     <div
       ref={setNodeRef}
-      className="p-4 bg-[#100F0F] m-3 pb-7 rounded-xl text-white"
+      className="p-4 bg-[#100F0F] m-3 pb-7 rounded-xl text-white whitespace-pre-wrap"
       onClick={props.onClick}
       style={style}
       {...attributes}
       {...listeners}
     >
-      <p>
-        <pre>{props.description}</pre>
-      </p>
+      {props.description}
     </div>
   );
 }
@@ -127,18 +125,12 @@ function Items({ items, setItems, updateItem }) {
       <SortableContext items={items} strategy={rectSortingStrategy}>
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <div
-            cols="30"
             spellcheck="true"
             contenteditable="true"
-            rows="10"
-            className="outline-none"
-            onInput={(e) =>
-              updateItem(activeItem.id, e.currentTarget.textContent)
-            }
+            className="outline-none whitespace-pre-wrap"
+            onInput={(e) => updateItem(activeItem.id, e.target.innerText)}
           >
-            <p>
-              <pre>{activeItem?.description}</pre>
-            </p>
+            {activeItem?.description}
           </div>
         </Modal>
         <div className="grid grid-cols-5">
