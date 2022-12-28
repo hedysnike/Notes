@@ -10,7 +10,6 @@ import {
 } from "@dnd-kit/core";
 import {
   SortableContext,
-  verticalListSortingStrategy,
   useSortable,
   arrayMove,
   rectSortingStrategy,
@@ -46,7 +45,7 @@ export default function App() {
   return (
     <div>
       <div className="bg-black h-screen">
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-10">
           <textarea
             type="text"
             value={currentItemValue}
@@ -83,7 +82,7 @@ export function Item(props) {
   return (
     <div
       ref={setNodeRef}
-      className="p-4 bg-[#100F0F] m-10 pb-10 rounded-xl text-white"
+      className="p-4 bg-[#100F0F] m-3 pb-7 rounded-xl text-white"
       onClick={props.onClick}
       style={style}
       {...attributes}
@@ -135,7 +134,7 @@ function Items({ items, setItems, updateItem }) {
             {activeItem?.description}
           </textarea>
         </Modal>
-        <div className="grid grid-cols-4">
+        <div className="grid grid-cols-5">
           {items.map((i) => (
             <Item
               id={i.id}
