@@ -15,6 +15,7 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { Textarea } from '@nextui-org/react';
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -46,14 +47,15 @@ export default function App() {
     <div>
       <div className="bg-black h-screen">
         <div className="flex justify-center mb-10">
-          <textarea
-            type="text"
+          <Textarea
             value={currentItemValue}
-            className="mt-16 w-96 py-1 px-3 outline-none shadow-[#100F0F] shadow-md rounded-lg bg-white  text-black border border-solid border-transparent"
+            minRows={2}
+            maxRows={10}
+            width="400px"
+            className="mt-16 py-1 px-3 shadow-green-900 shadow-md rounded-lg bg-white text-red-600 "
             placeholder="Take a note..."
-            onChange={(e) => {
-              setCurrentItemValue(e.target.value);
-            }}
+            onChange={(e) => { setCurrentItemValue(e.target.value); }}
+            cacheMeasurements={false}
           />
           <button
             onClick={(e) => {

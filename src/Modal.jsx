@@ -21,7 +21,7 @@ export default function MyModal({ open, onClose, children }) {
 
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <Transition.Child
+            <Transition.Child 
               as={Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 scale-95"
@@ -30,7 +30,7 @@ export default function MyModal({ open, onClose, children }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md border border-solid border-white transform overflow-hidden rounded-2xl bg-black p-6 text-left text-white align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md shadow-xl shadow-[#785CE5]/20  transform overflow-hidden rounded-2xl bg-[#1B152E] p-6 text-left text-white align-middle transition-all">
                 {children}
               </Dialog.Panel>
             </Transition.Child>
