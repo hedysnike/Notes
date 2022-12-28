@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./index.css";
+import { Input } from "antd";
 import Modal from "./Modal";
 import {
   DndContext,
@@ -15,11 +16,15 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { Textarea } from "@nextui-org/react";
+
+const { TextArea } = Input;
+
+
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
   const [items, setItems] = useState([]);
+
 
   function addItem() {
     setItems([
@@ -47,17 +52,17 @@ export default function App() {
     <div>
       <div className="bg-black h-screen">
         <div className="flex justify-center mb-10">
-          <Textarea
+          <TextArea
             value={currentItemValue}
-            minRows={2}
-            maxRows={10}
-            width="400px"
-            className="mt-16 py-1 px-3 shadow-green-900 shadow-md rounded-lg bg-white text-red-600 "
+            autoSize={{
+              minRows: 2,
+              maxRows: 18,
+            }}          
+            className="mt-16 w-96 py-2 shadow-green-900 shadow-md rounded-lg bg-white text-black"
             placeholder="Take a note..."
             onChange={(e) => {
               setCurrentItemValue(e.target.value);
             }}
-            cacheMeasurements={false}
           />
           <button
             onClick={(e) => {
