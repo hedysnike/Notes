@@ -124,15 +124,14 @@ function Items({ items, setItems, updateItem }) {
     >
       <SortableContext items={items} strategy={rectSortingStrategy}>
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
-          <textarea
-            name=""
-            id=""
+          <div
             cols="30"
+            contenteditable="true"
             rows="10"
-            onChange={(e) => updateItem(activeItem.id, e.currentTarget.value)}
+            onInput={(e) => updateItem(activeItem.id, e.currentTarget.textContent)}
           >
             {activeItem?.description}
-          </textarea>
+          </div>
         </Modal>
         <div className="grid grid-cols-5">
           {items.map((i) => (

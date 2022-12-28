@@ -30,7 +30,7 @@ export default function MyModal({ open, onClose, children }) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-md border border-solid border-white transform overflow-hidden rounded-2xl bg-black p-6 text-left text-white align-middle shadow-xl transition-all">
                 {children}
               </Dialog.Panel>
             </Transition.Child>
