@@ -17,31 +17,30 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-
-
 function renderTitle() {
   return (
     <div className="flex justify-center text-white">
-      <h1 placeholder="Title"
-          contenteditable="true"
-      >text</h1>
+      <h1 placeholder="Title" contenteditable="true">
+        text
+      </h1>
     </div>
   );
 }
-
-
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
   const [items, setItems] = useState([]);
   const [currentItemTitle, setCurrentItemTitle] = useState("");
-  const [visible, setVisible] = useState(false);
+  const [makeVisible, setMakeVisible] = useState(false);
   const { TextArea } = Input;
 
-  function toggleShow() {
-    setShow(!show);
+  function showInputField() {
+    setMakeVisible(true);
   }
 
+  function hideInputField() {
+    setMakeVisible(false);
+  }
 
   function addItem() {
     setItems([
@@ -78,34 +77,35 @@ export default function App() {
     );
   }
 
-
   return (
     <div>
       <div className="bg-black h-screen">
         <div className="flex justify-center mb-10">
           <div className="flex flex-col bg-[#100F0F] mt-16 rounded-xl shadow-md shadow-[#100F0F]">
-        <input
-          value={currentItemTitle} 
-          placeholder="Title"
-          className="md:w-96 w-60 text-sm p-2 m-1 bg-[#100F0F] text-white placeholder-gray-300 outline-none border-none"
-          onChange={(e) =>
-              setCurrentItemTitle(e.target.value)}
-          />
-          <TextArea
-            value={currentItemValue}
-            autoSize={{
-              minRows: 2,
-              maxRows: 18,
-            }}
-            className="sm:w-96 w-60 text-sm py-2 m-1 border-none bg-[#100F0F] placeholder-gray-300 text-white outline-none"
-            placeholder="Take a note..."
-            onChange={(e) => {
-              setCurrentItemValue(e.target.value);
-            }}
-          />
+            <input
+              value={currentItemTitle}
+              placeholder="Title"
+              style={{ display: makeVisible ? "block" : "none" }}
+              className="md:w-96 w-60 text-sm p-2 m-1 bg-[#100F0F] text-white placeholder-gray-300 outline-none border-none"
+              onChange={(e) => setCurrentItemTitle(e.target.value)}
+            />
+            <TextArea
+              value={currentItemValue}
+              autoSize={{
+                minRows: 2,
+                maxRows: 18,
+              }}
+              className="sm:w-96 w-60 text-sm py-2 m-1 border-none bg-[#100F0F] placeholder-gray-300 text-white outline-none"
+              placeholder="Take a note..."
+              onChange={(e) => {
+                setCurrentItemValue(e.target.value);
+              }}
+              onClick={showInputField}
+            />
           </div>
           <button
             onClick={(e) => {
+              hideInputField();
               addItem(currentItemValue, currentItemTitle);
             }}
             className="text-white ml-4 mt-16"
@@ -113,7 +113,12 @@ export default function App() {
             Add
           </button>
         </div>
-        <Items items={items} setItems={setItems} updatedescription={updatedescription} updateTitle={updateTitle} />
+        <Items
+          items={items}
+          setItems={setItems}
+          updatedescription={updatedescription}
+          updateTitle={updateTitle}
+        />
       </div>
     </div>
   );
@@ -138,7 +143,8 @@ export function Item(props) {
       {...listeners}
     >
       <div className="text-base text-white mb-3">
-      {props.title} <br /></div>
+        {props.title} <br />
+      </div>
       {props.description}
     </div>
   );
@@ -181,14 +187,16 @@ function Items({ items, setItems, updatedescription, updateTitle }) {
             className="outline-none whitespace-pre-wrap mb-3"
             onInput={(e) => updateTitle(activeItem.id, e.target.innerText)}
           >
-          {activeItem?.title}
+            {activeItem?.title}
           </div>
           <div
             spellcheck="true"
             contenteditable="true"
             className="outline-none whitespace-pre-wrap"
-            onInput={(e) => updatedescription(activeItem.id, e.target.innerText)}
-          > 
+            onInput={(e) =>
+              updatedescription(activeItem.id, e.target.innerText)
+            }
+          >
             {activeItem?.description}
           </div>
         </Modal>
