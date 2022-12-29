@@ -146,7 +146,7 @@ export function Item(props) {
   return (
     <div
       ref={setNodeRef}
-      className="bg-[#100F0F] hover:bg-[#1b1919] text-white m-3 rounded-xl relative"
+      className="bg-[#100F0F] hover:bg-[#1b1919] text-white m-3 rounded-xl relative hover:shadow-md hover:shadow-[#1b1919]"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={style}
