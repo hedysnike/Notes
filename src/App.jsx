@@ -17,16 +17,6 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-function renderTitle() {
-  return (
-    <div className="flex justify-center text-white">
-      <h1 placeholder="Title" contenteditable="true">
-        text
-      </h1>
-    </div>
-  );
-}
-
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
   const [items, setItems] = useState([]);
