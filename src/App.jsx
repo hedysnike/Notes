@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./index.css";
-import { Input } from "antd";
+import { Input, Popover, Tooltip } from "antd";
 import Modal from "./Modal";
 import {
   DndContext,
@@ -16,16 +16,16 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { BackspaceIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { BookmarkIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
   const [items, setItems] = useState([]);
+  const [labelValue, setLabelValue] = useState([]);
+  const [labelz, setLabelz] = useState([]);
   const [currentItemTitle, setCurrentItemTitle] = useState("");
   const [makeVisible, setMakeVisible] = useState(false);
   const { TextArea } = Input;
-
-
 
   function showInputField() {
     setMakeVisible(true);
@@ -49,7 +49,7 @@ export default function App() {
   }
 
   function deleteItem(id) {
-    console.log(items, id)
+    console.log(items, id);
     setItems((prev) => prev.filter((p) => p.id !== id));
   }
 
@@ -73,6 +73,11 @@ export default function App() {
         return item;
       })
     );
+  }
+
+  function addlabelz() {
+    setLabelz([{ ...labelz, labelValue }]);
+    setLabelValue("");
   }
 
   return (
@@ -126,7 +131,11 @@ export default function App() {
 export function Item(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
-
+  const popOvercontent = (
+    <div className="bg=[#1b1919] text-white">
+      <div>Add label</div>
+    </div>
+  );
   const [hovered, setHovered] = useState(false);
 
   const style = {
@@ -136,17 +145,16 @@ export function Item(props) {
 
   return (
     <div
-    ref={setNodeRef}
+      ref={setNodeRef}
       className="bg-[#100F0F] hover:bg-[#1b1919] text-white m-3 rounded-xl relative"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={style}
       {...attributes}
       {...listeners}
-
     >
       <div
-        className="p-4 pb-7 text-zinc-300 whitespace-pre-wrap text-sm "
+        className="p-4 pb-7 text-zinc-300 whitespace-pre-wrap text-sm mb-4"
         onClick={props.onClick}
       >
         <div className="text-base text-white mb-3">
@@ -154,17 +162,32 @@ export function Item(props) {
         </div>
         {props.description}
       </div>
-      <TrashIcon
-        width={20}
-        onClick={props.onComplete}
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
-        cursor="pointer"
-      />
+      <Popover content={popOvercontent} placement="bottom" color="#1b1919">
+        <BookmarkIcon
+          width={20}
+          className={`${hovered ? "" : "hidden"} absolute bottom-2 left-3 `}
+          cursor="pointer"
+        />
+      </Popover>
+      <Tooltip title="Delete" placement="bottom" color="#212121">
+        <TrashIcon
+          width={20}
+          onClick={props.onComplete}
+          className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
+          cursor="pointer"
+        />
+      </Tooltip>
     </div>
   );
 }
 
-function Items({ items, setItems, updatedescription, updateTitle, deleteItem }) {
+function Items({
+  items,
+  setItems,
+  updatedescription,
+  updateTitle,
+  deleteItem,
+}) {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState();
 
@@ -226,9 +249,7 @@ function Items({ items, setItems, updatedescription, updateTitle, deleteItem }) 
                 setOpenModal(true);
                 setActiveItem(i);
               }}
-              onComplete={
-                (e) => deleteItem(i.id)
-              }
+              onComplete={(e) => deleteItem(i.id)}
             />
           ))}
         </div>
