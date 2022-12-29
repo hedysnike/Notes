@@ -16,6 +16,7 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { BackspaceIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -23,6 +24,8 @@ export default function App() {
   const [currentItemTitle, setCurrentItemTitle] = useState("");
   const [makeVisible, setMakeVisible] = useState(false);
   const { TextArea } = Input;
+
+
 
   function showInputField() {
     setMakeVisible(true);
@@ -43,6 +46,11 @@ export default function App() {
     ]);
     setCurrentItemValue("");
     setCurrentItemTitle("");
+  }
+
+  function deleteItem(id) {
+    console.log(items, id)
+    setItems((prev) => prev.filter((p) => p.id !== id));
   }
 
   function updatedescription(id, description) {
@@ -108,6 +116,7 @@ export default function App() {
           setItems={setItems}
           updatedescription={updatedescription}
           updateTitle={updateTitle}
+          deleteItem={deleteItem}
         />
       </div>
     </div>
@@ -118,6 +127,8 @@ export function Item(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
 
+  const [hovered, setHovered] = useState(false);
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -125,22 +136,35 @@ export function Item(props) {
 
   return (
     <div
-      ref={setNodeRef}
-      className="p-4 bg-[#100F0F] m-3 pb-7 rounded-xl text-zinc-300 whitespace-pre-wrap text-sm "
-      onClick={props.onClick}
+    ref={setNodeRef}
+      className="bg-[#100F0F] hover:bg-[#1b1919] text-white m-3 rounded-xl relative"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={style}
       {...attributes}
       {...listeners}
+
     >
-      <div className="text-base text-white mb-3">
-        {props.title} <br />
+      <div
+        className="p-4 pb-7 text-zinc-300 whitespace-pre-wrap text-sm "
+        onClick={props.onClick}
+      >
+        <div className="text-base text-white mb-3">
+          {props.title} <br />
+        </div>
+        {props.description}
       </div>
-      {props.description}
+      <TrashIcon
+        width={20}
+        onClick={props.onComplete}
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
+        cursor="pointer"
+      />
     </div>
   );
 }
 
-function Items({ items, setItems, updatedescription, updateTitle }) {
+function Items({ items, setItems, updatedescription, updateTitle, deleteItem }) {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState();
 
@@ -202,6 +226,9 @@ function Items({ items, setItems, updatedescription, updateTitle }) {
                 setOpenModal(true);
                 setActiveItem(i);
               }}
+              onComplete={
+                (e) => deleteItem(i.id)
+              }
             />
           ))}
         </div>
