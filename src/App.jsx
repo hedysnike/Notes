@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./index.css";
 import { Input, Popover, Tooltip } from "antd";
-import Modal from "./Modal";
+import Modal from "./components/Modal";
 import {
   DndContext,
   useSensor,
@@ -17,6 +17,7 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { BookmarkIcon, TrashIcon } from "@heroicons/react/24/solid";
+import Snackbar from "@mui/material/Snackbar";
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -26,6 +27,14 @@ export default function App() {
   const [currentItemTitle, setCurrentItemTitle] = useState("");
   const [makeVisible, setMakeVisible] = useState(false);
   const { TextArea } = Input;
+  const [deletedSnack, setDeletedSnack] = useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+  const { vertical, horizontal, open } = deletedSnack;
+
+  
 
   function showInputField() {
     setMakeVisible(true);
@@ -48,9 +57,18 @@ export default function App() {
     setCurrentItemTitle("");
   }
 
+  const openNotification = (shiet) => () => { 
+    setDeletedSnack({ open: true, ...shiet });
+  };
+  const handleClose = () => {
+    setDeletedSnack({ ...deletedSnack, open: false });
+  };
+
+
   function deleteItem(id) {
     console.log(items, id);
     setItems((prev) => prev.filter((p) => p.id !== id));
+    openNotification({ vertical: 'top', horizontal: 'center' });
   }
 
   function updatedescription(id, description) {
@@ -84,6 +102,14 @@ export default function App() {
     <div>
       <div className="bg-black h-screen">
         <div className="flex justify-center mb-10">
+        <Snackbar
+                    anchorOrigin={{ vertical, horizontal }}
+                    open={open}
+                    onClose={handleClose}
+                    message="I love snacks"
+                    key={vertical + horizontal}
+            />
+  
           <div className="flex flex-col bg-[#100F0F] mt-16 rounded-xl shadow-md shadow-[#100F0F]">
             <input
               value={currentItemTitle}
