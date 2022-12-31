@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./index.css";
-import { Input, Popover, Tooltip } from "antd";
 import Modal from "./components/Modal";
 import {
   DndContext,
@@ -16,8 +15,10 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { BookmarkIcon, TrashIcon } from "@heroicons/react/24/solid";
-import Snackbar from "@mui/material/Snackbar";
+import BookmarkIcon from "@heroicons/react/24/solid/BookOpenIcon";
+import TrashIcon from "@heroicons/react/24/solid/TrashIcon";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
+
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -26,15 +27,6 @@ export default function App() {
   const [labelz, setLabelz] = useState([]);
   const [currentItemTitle, setCurrentItemTitle] = useState("");
   const [makeVisible, setMakeVisible] = useState(false);
-  const { TextArea } = Input;
-  const [deletedSnack, setDeletedSnack] = useState({
-    open: false,
-    vertical: 'top',
-    horizontal: 'center',
-  });
-  const { vertical, horizontal, open } = deletedSnack;
-
-  
 
   function showInputField() {
     setMakeVisible(true);
@@ -57,18 +49,9 @@ export default function App() {
     setCurrentItemTitle("");
   }
 
-  const openNotification = (shiet) => () => { 
-    setDeletedSnack({ open: true, ...shiet });
-  };
-  const handleClose = () => {
-    setDeletedSnack({ ...deletedSnack, open: false });
-  };
-
-
   function deleteItem(id) {
     console.log(items, id);
     setItems((prev) => prev.filter((p) => p.id !== id));
-    openNotification({ vertical: 'top', horizontal: 'center' });
   }
 
   function updatedescription(id, description) {
@@ -102,14 +85,6 @@ export default function App() {
     <div>
       <div className="bg-black h-screen">
         <div className="flex justify-center mb-10">
-        <Snackbar
-                    anchorOrigin={{ vertical, horizontal }}
-                    open={open}
-                    onClose={handleClose}
-                    message="I love snacks"
-                    key={vertical + horizontal}
-            />
-  
           <div className="flex flex-col bg-[#100F0F] mt-16 rounded-xl shadow-md shadow-[#100F0F]">
             <input
               value={currentItemTitle}
@@ -118,13 +93,10 @@ export default function App() {
               className="md:w-96 w-60 text-sm p-2 m-1 bg-[#100F0F] text-white placeholder-gray-300 outline-none border-none"
               onChange={(e) => setCurrentItemTitle(e.target.value)}
             />
-            <TextArea
+            <TextareaAutosize
               value={currentItemValue}
-              autoSize={{
-                minRows: 1,
-                maxRows: 18,
-              }}
-              className="sm:w-96 w-60 text-sm py-2 m-1 border-none bg-[#100F0F] placeholder-gray-300 text-white outline-none"
+              multiline
+              className="sm:w-96 w-60 text-sm py-2 px-3 m-1 border-none resize-none bg-[#100F0F] placeholder-gray-300 text-white outline-none"
               placeholder="Take a note..."
               onChange={(e) => {
                 setCurrentItemValue(e.target.value);
@@ -157,11 +129,6 @@ export default function App() {
 export function Item(props) {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: props.id });
-  const popOvercontent = (
-    <div className="bg=[#1b1919] text-white">
-      <div>Add label</div>
-    </div>
-  );
   const [hovered, setHovered] = useState(false);
 
   const style = {
@@ -174,7 +141,11 @@ export function Item(props) {
       ref={setNodeRef}
       className="bg-[#100F0F] hover:bg-[#1b1919] text-white m-3 rounded-xl relative hover:shadow-md hover:shadow-[#1b1919]"
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseLeave={() =>
+        setTimeout(() => {
+          setHovered(false);
+        }, 400)
+      }
       style={style}
       {...attributes}
       {...listeners}
@@ -188,21 +159,17 @@ export function Item(props) {
         </div>
         {props.description}
       </div>
-      <Popover content={popOvercontent} placement="bottom" color="#1b1919">
-        <BookmarkIcon
-          width={20}
-          className={`${hovered ? "" : "hidden"} absolute bottom-2 left-3 `}
-          cursor="pointer"
-        />
-      </Popover>
-      <Tooltip title="Delete" placement="bottom" color="#212121">
-        <TrashIcon
-          width={20}
-          onClick={props.onComplete}
-          className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
-          cursor="pointer"
-        />
-      </Tooltip>
+      <BookmarkIcon
+        width={20}
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-3`}
+        cursor="pointer"
+      />
+      <TrashIcon
+        width={20}
+        onClick={props.onComplete}
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
+        cursor="pointer"
+      />
     </div>
   );
 }
