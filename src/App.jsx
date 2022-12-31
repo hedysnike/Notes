@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./index.css";
 import { Input, Popover, Tooltip } from "antd";
-import Modal from "./Modal";
+import Modal from "./components/Modal";
 import {
   DndContext,
   useSensor,
