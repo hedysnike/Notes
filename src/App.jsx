@@ -95,7 +95,7 @@ export default function App() {
             <TextArea
               value={currentItemValue}
               autoSize={{
-                minRows: 2,
+                minRows: 1,
                 maxRows: 18,
               }}
               className="sm:w-96 w-60 text-sm py-2 m-1 border-none bg-[#100F0F] placeholder-gray-300 text-white outline-none"
@@ -237,7 +237,7 @@ function Items({
             {activeItem?.description}
           </div>
         </Modal>
-        <div className="grid md:grid grid-cols-2 md:grid-cols-5">
+        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20">
           {items.map((i) => (
             <Item
               id={i.id}
