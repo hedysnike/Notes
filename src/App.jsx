@@ -82,7 +82,7 @@ export default function App() {
 
   return (
     <div>
-      <div className="bg-black h-screen">
+      <div className="bg-black min-h-screen h-auto ">
         <div className="flex justify-center mb-10">
           <div className="flex flex-col bg-[#100F0F] mt-16 rounded-xl shadow-md shadow-[#100F0F]">
             <input
@@ -229,7 +229,7 @@ function Items({
             {activeItem?.description}
           </div>
         </Modal>
-        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20">
+        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
           {items.map((i) => (
             <Item
               id={i.id}
