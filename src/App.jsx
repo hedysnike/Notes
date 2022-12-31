@@ -138,12 +138,12 @@ export function Item(props) {
   return (
     <div
       ref={setNodeRef}
-      className="bg-[#100F0F] hover:bg-[#1b1919] text-white m-3 rounded-xl relative hover:shadow-md hover:shadow-[#1b1919]"
+      className="bg-[#100F0F] hover:bg-[#1b1919] text-white m-3 rounded-xl relative hover:shadow-md hover:shadow-[#1b1919] overflow-hidden max-h-96"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() =>
         setTimeout(() => {
           setHovered(false);
-        }, 400)
+        }, 250)
       }
       style={style}
       {...attributes}
