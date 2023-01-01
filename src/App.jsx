@@ -15,8 +15,6 @@ import {
   rectSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import BookmarkIcon from "@heroicons/react/24/solid/BookOpenIcon";
-import TrashIcon from "@heroicons/react/24/solid/TrashIcon";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { Icon } from "@iconify/react";
 
@@ -143,6 +141,7 @@ export function Item(props) {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    zIndex: hovered ? 10 : 0,
   };
 
   return (
@@ -271,7 +270,7 @@ function Items({
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
-      <SortableContext items={items} strategy={rectSortingStrategy}>
+      <SortableContext items={items} strategy={rectSortingStrategy} className="z-20">
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <div
             spellcheck="true"
