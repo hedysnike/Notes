@@ -276,7 +276,7 @@ function Items({
           <div
             spellcheck="true"
             contenteditable="true"
-            className="outline-none whitespace-pre-wrap mb-3"
+            className="outline-none whitespace-pre-wrap mb-3 relative"
             onInput={(e) => updateTitle(activeItem.id, e.target.innerText)}
           >
             {activeItem?.title}
@@ -284,12 +284,75 @@ function Items({
           <div
             spellcheck="true"
             contenteditable="true"
-            className="outline-none whitespace-pre-wrap"
+            className="outline-none whitespace-pre-wrap mb-6"
             onInput={(e) =>
               updatedescription(activeItem.id, e.target.innerText)
             }
           >
             {activeItem?.description}
+            <Icon
+              icon="ic:outline-push-pin"
+              color="white"
+              width="24"
+              height="20"
+              className="absolute top-2 right-3"
+            />
+            <Icon
+              icon="mdi:trash-can-outline"
+              color="white"
+              width="24"
+              height="20"
+              className="absolute bottom-2 right-3"
+              cursor="pointer"
+            />
+            <Icon
+              icon="material-symbols:bookmark-outline"
+              color="white"
+              width="24"
+              height="20"
+              className="absolute bottom-2 left-3"
+              cursor="pointer"
+            />
+            <Icon
+              icon="mdi:paint-outline"
+              color="white"
+              width="24"
+              height="20"
+              className="absolute bottom-2 left-10"
+              cursor="pointer"
+            />
+            <Icon
+              icon="material-symbols:image"
+              color="white"
+              width="24"
+              height="20"
+              className="absolute bottom-2 left-[68px]"
+              cursor="pointer"
+            />
+            <Icon
+              icon="mdi:format-list-checkbox"
+              color="white"
+              width="24"
+              height="20"
+              className="absolute bottom-2 left-[96px]"
+              cursor="pointer"
+            />
+            <Icon
+              icon="material-symbols:label-outline-sharp"
+              color="white"
+              width="24"
+              height="20"
+              className="absolute bottom-2 left-[152px]"
+              cursor="pointer"
+            />
+            <Icon
+              icon="material-symbols:archive-outline"
+              color="white"
+              width="24"
+              height="20"
+              className="absolute bottom-2 left-[124px]"
+              cursor="pointer"
+            />
           </div>
         </Modal>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
