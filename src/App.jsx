@@ -18,6 +18,7 @@ import { CSS } from "@dnd-kit/utilities";
 import BookmarkIcon from "@heroicons/react/24/solid/BookOpenIcon";
 import TrashIcon from "@heroicons/react/24/solid/TrashIcon";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
+import { Icon } from "@iconify/react";
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -26,6 +27,15 @@ export default function App() {
   const [labelz, setLabelz] = useState([]);
   const [currentItemTitle, setCurrentItemTitle] = useState("");
   const [makeVisible, setMakeVisible] = useState(false);
+  const [pinned, setPinned] = useState([]);
+
+  function addPinned(id) {
+    setPinned([...pinned, id]);
+  }
+
+  function removePinned(id) {
+    setPinned(pinned.filter((p) => p !== id));
+  }
 
   function showInputField() {
     setMakeVisible(true);
@@ -158,15 +168,68 @@ export function Item(props) {
         </div>
         {props.description}
       </div>
-      <BookmarkIcon
-        width={20}
+      <Icon
+        icon="ic:outline-push-pin"
+        color="white"
+        width="24"
+        height="20"
+        className={`${hovered ? "" : "hidden"} absolute top-2 right-3`}
+      />
+      <Icon
+        onClick={props.onComplete}
+        icon="mdi:trash-can-outline"
+        color="white"
+        width="24"
+        height="20"
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
+        cursor="pointer"
+      />
+      <Icon
+        icon="material-symbols:bookmark-outline"
+        color="white"
+        width="24"
+        height="20"
         className={`${hovered ? "" : "hidden"} absolute bottom-2 left-3`}
         cursor="pointer"
       />
-      <TrashIcon
-        width={20}
-        onClick={props.onComplete}
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
+      <Icon
+        icon="mdi:paint-outline"
+        color="white"
+        width="24"
+        height="20"
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-10`}
+        cursor="pointer"
+      />
+      <Icon
+        icon="material-symbols:image"
+        color="white"
+        width="24"
+        height="20"
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[68px]`}
+        cursor="pointer"
+      />
+      <Icon
+        icon="mdi:format-list-checkbox"
+        color="white"
+        width="24"
+        height="20"
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[96px]`}
+        cursor="pointer"
+      />
+      <Icon
+        icon="material-symbols:label-outline-sharp"
+        color="white"
+        width="24"
+        height="20"
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[152px]`}
+        cursor="pointer"
+      />
+      <Icon
+        icon="material-symbols:archive-outline"
+        color="white"
+        width="24"
+        height="20"
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[124px]`}
         cursor="pointer"
       />
     </div>
