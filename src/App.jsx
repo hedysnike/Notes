@@ -274,12 +274,12 @@ function Items({
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
-      <SortableContext items={items} strategy={rectSortingStrategy} className="z-20">
+      <SortableContext items={items} strategy={rectSortingStrategy}>
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <div
             spellcheck="true"
             contenteditable="true"
-            className="outline-none whitespace-pre-wrap mb-3 relative"
+            className="outline-none whitespace-pre-wrap mb-3"
             onInput={(e) => updateTitle(activeItem.id, e.target.innerText)}
           >
             {activeItem?.title}
@@ -293,6 +293,8 @@ function Items({
             }
           >
             {activeItem?.description}
+          </div>
+          <div>
             <Icon
               icon="ic:outline-push-pin"
               color="white"
