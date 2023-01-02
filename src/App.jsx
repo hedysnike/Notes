@@ -132,6 +132,7 @@ export default function App() {
           deleteItem={deleteItem}
         />
       </div>
+      </div>
     </div>
   );
 }
