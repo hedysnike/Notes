@@ -304,13 +304,6 @@ function Items({
           </div>
           <div>
             <Icon
-              icon="ic:outline-push-pin"
-              color="white"
-              width="24"
-              height="20"
-              className="absolute top-2 right-3"
-            />
-            <Icon
               icon="mdi:trash-can-outline"
               color="white"
               width="24"
