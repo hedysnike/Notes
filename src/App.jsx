@@ -6,7 +6,8 @@ import { SortableContext, useSortable, arrayMove, rectSortingStrategy } from "@d
 import { CSS } from "@dnd-kit/utilities";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { Icon } from "@iconify/react";
-import Notifications from "./components/Notifications";
+import { Notifications } from "./components/Notifications";
+import { Pinnotifications } from "./components/Notifications";
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -15,6 +16,7 @@ export default function App() {
   const [makeVisible, setMakeVisible] = useState(false);
   const [pinned, setPinned] = useState([]);
   const [notfOpen, setNotfOpen] = useState(false);
+  const [notfpin, setNotfpin] = useState(false);
 
   function showInputField() {
     setMakeVisible(true);
@@ -51,6 +53,10 @@ export default function App() {
       setPinned(pinned.filter((p) => p !== i));
     } else {
       setPinned([...pinned, i]);
+      setNotfpin(true);
+      setTimeout(() => {
+        setNotfpin(false);
+      }, 2500);
     }
   }
 
@@ -80,7 +86,8 @@ export default function App() {
     <div>
       <div className="bg-black min-h-screen h-auto flex w-full overflow-hidden">
         <div className="bg-[#100F0F] h-full fixed w-[5%] text-white ]">
-          <Notifications notfOpen={notfOpen} setNotfOpen={setNotfOpen} />
+          <Notifications notfOpen={notfOpen}/>
+          <Pinnotifications notfpin={notfpin} />
           <div className="relative">
             <Icon className="absolute top-64 left-6" icon="ph:notebook-light" color="white" width="25" height="25" />
             <Icon
