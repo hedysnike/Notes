@@ -27,14 +27,6 @@ export default function App() {
   const [makeVisible, setMakeVisible] = useState(false);
   const [pinned, setPinned] = useState([]);
 
-  function addPinned(id) {
-    setPinned([...pinned, id]);
-  }
-
-  function removePinned(id) {
-    setPinned(pinned.filter((p) => p !== id));
-  }
-
   function showInputField() {
     setMakeVisible(true);
   }
@@ -59,6 +51,14 @@ export default function App() {
   function deleteItem(id) {
     console.log(items, id);
     setItems((prev) => prev.filter((p) => p.id !== id));
+  }
+
+  function togglePinned(i) {
+    if (pinned.includes(i)) {
+      setPinned(pinned.filter((p) => p !== i));
+    } else {
+      setPinned([...pinned, i]);
+    }
   }
 
   function updatedescription(id, description) {
@@ -90,48 +90,60 @@ export default function App() {
 
   return (
     <div>
-      <div className="bg-black min-h-screen h-auto flex">
-      <div className="bg-[#100F0F] h-full fixed w-[5%] text-white ]"></div>
-      <div className="h-full w-[5%]"></div> 
-        <div className="flex-none w-[95%]">
-        <div className="flex justify-center mb-10">
-          <div className="flex flex-col bg-[#100F0F] mt-16 rounded-xl shadow-md shadow-[#100F0F]">
-            <input
-              value={currentItemTitle}
-              placeholder="Title"
-              style={{ display: makeVisible ? "block" : "none" }}
-              className="md:w-96 w-60 text-sm p-2 m-1 bg-[#100F0F] text-white placeholder-gray-300 outline-none border-none"
-              onChange={(e) => setCurrentItemTitle(e.target.value)}
-            />
-            <TextareaAutosize
-              value={currentItemValue}
-              multiline
-              className="sm:w-96 w-60 text-sm py-2 px-3 m-1 border-none resize-none bg-[#100F0F] placeholder-gray-300 text-white outline-none"
-              placeholder="Take a note..."
-              onChange={(e) => {
-                setCurrentItemValue(e.target.value);
-              }}
-              onClick={showInputField}
+      <div className="bg-black min-h-screen h-auto flex w-full overflow-hidden">
+        <div className="bg-[#100F0F] h-full fixed w-[5%] text-white ]">
+          {" "}
+          <div className="relative">
+            <Icon
+              className="absolute top-72 left-5"
+              icon="material-symbols:label-outline"
+              color="white"
+              width="25"
+              height="25"
             />
           </div>
-          <button
-            onClick={(e) => {
-              hideInputField();
-              addItem(currentItemValue, currentItemTitle);
-            }}
-            className="text-white ml-4 mt-16"
-          >
-            Add
-          </button>
         </div>
-        <Items
-          items={items}
-          setItems={setItems}
-          updatedescription={updatedescription}
-          updateTitle={updateTitle}
-          deleteItem={deleteItem}
-        />
-      </div>
+        <div className="flex-none w-[95%]">
+          <div className="flex justify-center mb-10">
+            <div className="flex flex-col bg-[#100F0F] mt-16 rounded-xl shadow-md shadow-[#100F0F]">
+              <input
+                value={currentItemTitle}
+                placeholder="Title"
+                style={{ display: makeVisible ? "block" : "none" }}
+                className="md:w-96 w-60 text-sm p-2 m-1 bg-[#100F0F] text-white placeholder-gray-300 outline-none border-none"
+                onChange={(e) => setCurrentItemTitle(e.target.value)}
+              />
+              <TextareaAutosize
+                value={currentItemValue}
+                multiline
+                className="sm:w-96 w-60 text-sm py-2 px-3 m-1 border-none resize-none bg-[#100F0F] placeholder-gray-300 text-white outline-none"
+                placeholder="Take a note..."
+                onChange={(e) => {
+                  setCurrentItemValue(e.target.value);
+                }}
+                onClick={showInputField}
+              />
+            </div>
+            <button
+              onClick={(e) => {
+                hideInputField();
+                addItem(currentItemValue, currentItemTitle);
+              }}
+              className="text-white ml-4 mt-16"
+            >
+              Add
+            </button>
+          </div>
+          <Items
+            items={items}
+            setItems={setItems}
+            updatedescription={updatedescription}
+            updateTitle={updateTitle}
+            deleteItem={deleteItem}
+            togglePinned={togglePinned}
+            pinned={pinned}
+          />
+        </div>
       </div>
     </div>
   );
@@ -172,9 +184,10 @@ export function Item(props) {
         {props.description}
       </div>
       <Icon
+        onClick={props.onToggle}
         icon="ic:outline-push-pin"
         color="white"
-        width="24"
+        width="22"
         height="20"
         className={`${hovered ? "" : "hidden"} absolute top-2 right-3`}
       />
@@ -182,7 +195,7 @@ export function Item(props) {
         onClick={props.onComplete}
         icon="mdi:trash-can-outline"
         color="white"
-        width="24"
+        width="22"
         height="20"
         className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
         cursor="pointer"
@@ -190,7 +203,7 @@ export function Item(props) {
       <Icon
         icon="material-symbols:bookmark-outline"
         color="white"
-        width="24"
+        width="22"
         height="20"
         className={`${hovered ? "" : "hidden"} absolute bottom-2 left-3`}
         cursor="pointer"
@@ -198,7 +211,7 @@ export function Item(props) {
       <Icon
         icon="mdi:paint-outline"
         color="white"
-        width="24"
+        width="22"
         height="20"
         className={`${hovered ? "" : "hidden"} absolute bottom-2 left-10`}
         cursor="pointer"
@@ -206,7 +219,7 @@ export function Item(props) {
       <Icon
         icon="material-symbols:image"
         color="white"
-        width="24"
+        width="22"
         height="20"
         className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[68px]`}
         cursor="pointer"
@@ -214,23 +227,15 @@ export function Item(props) {
       <Icon
         icon="mdi:format-list-checkbox"
         color="white"
-        width="24"
+        width="22"
         height="20"
         className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[96px]`}
         cursor="pointer"
       />
       <Icon
-        icon="material-symbols:label-outline-sharp"
-        color="white"
-        width="24"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[152px]`}
-        cursor="pointer"
-      />
-      <Icon
         icon="material-symbols:archive-outline"
         color="white"
-        width="24"
+        width="22"
         height="20"
         className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[124px]`}
         cursor="pointer"
@@ -245,6 +250,8 @@ function Items({
   updatedescription,
   updateTitle,
   deleteItem,
+  togglePinned,
+  pinned,
 }) {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState();
@@ -360,21 +367,41 @@ function Items({
             />
           </div>
         </Modal>
+        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-20">
+        {pinned.map((b) => (
+              <Item
+                id={b.id}
+                key={b.id}
+                title={b.title}
+                description={b.description}
+                onClick={() => {
+                  setOpenModal(true);
+                  setActiveItem(b);
+                }}
+                onComplete={(e) => deleteItem(b.id)}
+                onToggle={(e) => togglePinned(b)}
+                pinned={b.pinned}
+              />
+            ))}
+            </div>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
-          {items.map((i) => (
-            <Item
-              id={i.id}
-              key={i.id}
-              title={i.title}
-              description={i.description}
-              onClick={() => {
-                console.log("clicked", i);
-                setOpenModal(true);
-                setActiveItem(i);
-              }}
-              onComplete={(e) => deleteItem(i.id)}
-            />
-          ))}
+          {items.filter((item) => !pinned.includes(item))
+            .map((i) => (
+              <Item
+                id={i.id}
+                key={i.id}
+                title={i.title}
+                description={i.description}
+                onClick={() => {
+                  console.log("clicked", i);
+                  setOpenModal(true);
+                  setActiveItem(i);
+                }}
+                onComplete={(e) => deleteItem(i.id)}
+                onToggle={(e) => togglePinned(i)}
+                pinned={i.pinned}
+              />
+            ))}
         </div>
       </SortableContext>
     </DndContext>
