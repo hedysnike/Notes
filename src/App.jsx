@@ -111,7 +111,7 @@ export default function App() {
                 value={currentItemTitle}
                 placeholder="Title"
                 style={{ display: makeVisible ? "block" : "none" }}
-                className="md:w-96 w-60 text-sm p-2 m-1 bg-[#100F0F] text-white placeholder-gray-300 outline-none border-none"
+                className="md:w-96 w-60 text-base p-2 m-1 bg-[#100F0F] text-white placeholder-gray-300 outline-none border-none"
                 onChange={(e) => setCurrentItemTitle(e.target.value)}
               />
               <TextareaAutosize
@@ -169,14 +169,14 @@ export function Item(props) {
       onMouseLeave={() =>
         setTimeout(() => {
           setHovered(false);
-        }, 250)
+        }, 150)
       }
       style={style}
       {...attributes}
       {...listeners}
     >
       <div
-        className="p-4 pb-7 text-zinc-300 whitespace-pre-wrap text-sm mb-4"
+        className="p-4 pb-7 text-zinc-300 whitespace-pre-wrap text-sm mb-8"
         onClick={props.onClick}
       >
         <div className="text-base text-white mb-3">
@@ -285,7 +285,7 @@ function Items({
       <SortableContext items={items} strategy={rectSortingStrategy}>
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <div
-            spellcheck="true"
+            placeholder="Title"
             contenteditable="true"
             className="outline-none whitespace-pre-wrap mb-3"
             onInput={(e) => updateTitle(activeItem.id, e.target.innerText)}
@@ -293,7 +293,7 @@ function Items({
             {activeItem?.title}
           </div>
           <div
-            spellcheck="true"
+            placeholder="Notes"
             contenteditable="true"
             className="outline-none whitespace-pre-wrap mb-6"
             onInput={(e) =>
@@ -362,22 +362,22 @@ function Items({
           </div>
         </Modal>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-20">
-        {pinned.map((b) => (
-              <Item
-                id={b.id}
-                key={b.id}
-                title={b.title}
-                description={b.description}
-                onClick={() => {
-                  setOpenModal(true);
-                  setActiveItem(b);
-                }}
-                onComplete={(e) => deleteItem(b.id)}
-                onToggle={(e) => togglePinned(b)}
-                pinned={b.pinned}
-              />
-            ))}
-            </div>
+          {pinned.map((b) => (
+            <Item
+              id={b.id}
+              key={b.id}
+              title={b.title}
+              description={b.description}
+              onClick={() => {
+                setOpenModal(true);
+                setActiveItem(b);
+              }}
+              onComplete={(e) => deleteItem(b.id)}
+              onToggle={(e) => togglePinned(b)}
+              pinned={b.pinned}
+            />
+          ))}
+        </div>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
           {items.filter((item) => !pinned.includes(item))
             .map((i) => (
