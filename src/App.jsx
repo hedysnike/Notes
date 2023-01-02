@@ -1,31 +1,20 @@
 import { useState } from "react";
 import "./index.css";
 import Modal from "./components/Modal";
-import {
-  DndContext,
-  useSensor,
-  useSensors,
-  PointerSensor,
-  closestCenter,
-} from "@dnd-kit/core";
-import {
-  SortableContext,
-  useSortable,
-  arrayMove,
-  rectSortingStrategy,
-} from "@dnd-kit/sortable";
+import { DndContext, useSensor, useSensors, PointerSensor, closestCenter } from "@dnd-kit/core";
+import { SortableContext, useSortable, arrayMove, rectSortingStrategy } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { Icon } from "@iconify/react";
+import Notifications from "./components/Notifications";
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
   const [items, setItems] = useState([]);
-  const [labelValue, setLabelValue] = useState([]);
-  const [labelz, setLabelz] = useState([]);
   const [currentItemTitle, setCurrentItemTitle] = useState("");
   const [makeVisible, setMakeVisible] = useState(false);
   const [pinned, setPinned] = useState([]);
+  const [notfOpen, setNotfOpen] = useState(false);
 
   function showInputField() {
     setMakeVisible(true);
@@ -51,6 +40,10 @@ export default function App() {
   function deleteItem(id) {
     console.log(items, id);
     setItems((prev) => prev.filter((p) => p.id !== id));
+    setNotfOpen(true);
+    setTimeout(() => {
+      setNotfOpen(false);
+    }, 2500);
   }
 
   function togglePinned(i) {
@@ -83,27 +76,30 @@ export default function App() {
     );
   }
 
-  function addlabelz() {
-    setLabelz([{ ...labelz, labelValue }]);
-    setLabelValue("");
-  }
-
   return (
     <div>
       <div className="bg-black min-h-screen h-auto flex w-full overflow-hidden">
         <div className="bg-[#100F0F] h-full fixed w-[5%] text-white ]">
-          {" "}
+          <Notifications notfOpen={notfOpen} setNotfOpen={setNotfOpen} />
           <div className="relative">
+            <Icon className="absolute top-64 left-6" icon="ph:notebook-light" color="white" width="25" height="25" />
             <Icon
-              className="absolute top-72 left-5"
+              className="absolute top-72 left-6"
               icon="material-symbols:label-outline"
+              color="white"
+              width="25"
+              height="25"
+            />
+            <Icon
+              className="absolute top-80 left-6"
+              icon="material-symbols:archive-outline"
               color="white"
               width="25"
               height="25"
             />
           </div>
         </div>
-        <div className="h-full w-[5%]"></div> 
+        <div className="h-full w-[5%]"></div>
         <div className="flex-none w-[95%]">
           <div className="flex justify-center mb-10">
             <div className="flex flex-col bg-[#100F0F] mt-16 rounded-xl shadow-md shadow-[#100F0F]">
@@ -151,8 +147,7 @@ export default function App() {
 }
 
 export function Item(props) {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: props.id });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
   const [hovered, setHovered] = useState(false);
 
   const style = {
@@ -175,10 +170,7 @@ export function Item(props) {
       {...attributes}
       {...listeners}
     >
-      <div
-        className="p-4 pb-7 text-zinc-300 whitespace-pre-wrap text-sm mb-8"
-        onClick={props.onClick}
-      >
+      <div className="p-4 pb-7 text-zinc-300 whitespace-pre-wrap text-sm mb-8" onClick={props.onClick}>
         <div className="text-base text-white mb-3">
           {props.title} <br />
         </div>
@@ -245,21 +237,11 @@ export function Item(props) {
   );
 }
 
-function Items({
-  items,
-  setItems,
-  updatedescription,
-  updateTitle,
-  deleteItem,
-  togglePinned,
-  pinned,
-}) {
+function Items({ items, setItems, updatedescription, updateTitle, deleteItem, togglePinned, pinned }) {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState();
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
-  );
+  const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   function handleDragEnd(event) {
     const { active, over } = event;
@@ -277,12 +259,8 @@ function Items({
   }
 
   return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-    >
-      <SortableContext items={items} strategy={rectSortingStrategy}>
+    <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+      <SortableContext items={items} strategy={rectSortingStrategy} className="z-20">
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <div
             placeholder="Title"
@@ -296,9 +274,7 @@ function Items({
             placeholder="Notes"
             contenteditable="true"
             className="outline-none whitespace-pre-wrap mb-6"
-            onInput={(e) =>
-              updatedescription(activeItem.id, e.target.innerText)
-            }
+            onInput={(e) => updatedescription(activeItem.id, e.target.innerText)}
           >
             {activeItem?.description}
           </div>
@@ -379,7 +355,8 @@ function Items({
           ))}
         </div>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
-          {items.filter((item) => !pinned.includes(item))
+          {items
+            .filter((item) => !pinned.includes(item))
             .map((i) => (
               <Item
                 id={i.id}

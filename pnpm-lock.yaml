@@ -5,7 +5,6 @@ specifiers:
   '@dnd-kit/sortable': ^7.0.1
   '@dnd-kit/utilities': ^3.2.1
   '@headlessui/react': ^1.7.7
-  '@heroicons/react': ^2.0.13
   '@iconify/react': ^4.0.1
   '@mui/base': 5.0.0-alpha.112
   '@types/react': ^18.0.26
@@ -24,7 +23,6 @@ dependencies:
   '@dnd-kit/sortable': 7.0.1_ighjjj6vulsdnb2lagbd2egmxy
   '@dnd-kit/utilities': 3.2.1_react@18.2.0
   '@headlessui/react': 1.7.7_biqbaboplfbrettd7655fr4n2y
-  '@heroicons/react': 2.0.13_react@18.2.0
   '@mui/base': 5.0.0-alpha.112_ib3m5ricvtkl2cll7qpr2f6lvq
   nanoid: 4.0.0
   react: 18.2.0
@@ -536,14 +534,6 @@ packages:
       client-only: 0.0.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-    dev: false
-
-  /@heroicons/react/2.0.13_react@18.2.0:
-    resolution: {integrity: sha512-iSN5XwmagrnirWlYEWNPdCDj9aRYVD/lnK3JlsC9/+fqGF80k8C7rl+1HCvBX0dBoagKqOFBs6fMhJJ1hOg1EQ==}
-    peerDependencies:
-      react: '>= 16'
-    dependencies:
-      react: 18.2.0
     dev: false
 
   /@iconify/react/4.0.1_react@18.2.0:
