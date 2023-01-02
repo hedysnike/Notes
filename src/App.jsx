@@ -90,7 +90,10 @@ export default function App() {
 
   return (
     <div>
-      <div className="bg-black min-h-screen h-auto ">
+      <div className="bg-black min-h-screen h-auto flex">
+      <div className="bg-[#100F0F] h-full fixed w-[5%] text-white ]"></div>
+      <div className="h-full w-[5%]"></div> 
+        <div className="flex-none w-[95%]">
         <div className="flex justify-center mb-10">
           <div className="flex flex-col bg-[#100F0F] mt-16 rounded-xl shadow-md shadow-[#100F0F]">
             <input
