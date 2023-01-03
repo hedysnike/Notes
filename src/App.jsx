@@ -8,6 +8,7 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { Icon } from "@iconify/react";
 import { Notifications } from "./components/Notifications";
 import { Pinnotifications } from "./components/Notifications";
+import LabelsModal from "./components/LabelsModal";
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -17,6 +18,7 @@ export default function App() {
   const [pinned, setPinned] = useState([]);
   const [notfOpen, setNotfOpen] = useState(false);
   const [notfpin, setNotfpin] = useState(false);
+  const [labelPopup, setLabelPopup] = useState(false);
 
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("Items"));
@@ -119,6 +121,36 @@ export default function App() {
           <Notifications notfOpen={notfOpen} />
           <Pinnotifications notfpin={notfpin} />
           <div className="relative">
+            <LabelsModal openPopup={labelPopup} closePopup={() => setLabelPopup(false)}>
+              <div className="p-4">
+                <div>
+                <div className="mb-2 font-medium">
+                  <h1>Edit Labels</h1>
+                </div>
+                <div className="flex items-center">
+                <Icon icon="ic:sharp-plus" color="white" width="18" height="18" className="border border-solid border-transparent opacity-80"/>
+                <input type="text" placeholder="Create a new Label" className="bg-[#313235] outline-none w-[220px] p-2" />
+                <Icon icon="ic:sharp-check" color="white" width="20" height="20" className="opacity-80"/>
+                </div>
+                <div className="flex items-center">
+                <Icon icon="material-symbols:label" color="white" width="18" height="18" className="border border-solid border-transparent opacity-80"/>
+                <div className="w-[220px] p-2">Label 1</div>
+                <Icon icon="fa-solid:pen" color="white" width="17" height="17" className="border border-solid border-transparent opacity-80" />
+                </div>
+                <div className="flex items-center">
+                <Icon icon="material-symbols:label" color="white" width="18" height="18" className="border border-solid border-transparent opacity-80"/>
+                <div className="w-[220px] p-2">Label 1</div>
+                <Icon icon="fa-solid:pen" color="white" width="17" height="17" className="border border-solid border-transparent opacity-80" />
+                </div>
+                <div className="flex items-center">
+                <Icon icon="material-symbols:label" color="white" width="18" height="18" className="border border-solid border-transparent opacity-80"/>
+                <div className="w-[220px] p-2">Label 1</div>
+                <Icon icon="fa-solid:pen" color="white" width="17" height="17" className="border border-solid border-transparent opacity-80" />
+                </div>
+
+                </div>
+              </div>
+            </LabelsModal>
             <Icon className="absolute top-64 left-6" icon="ph:notebook-light" color="white" width="25" height="25" />
             <Icon
               className="absolute top-72 left-6"
@@ -126,6 +158,10 @@ export default function App() {
               color="white"
               width="25"
               height="25"
+              onClick={() => {
+                setLabelPopup(true);
+              }}
+              cursor="pointer"
             />
             <Icon
               className="absolute top-80 left-6"
@@ -220,6 +256,7 @@ export function Item(props) {
         width="22"
         height="20"
         className={`${hovered ? "" : "hidden"} absolute top-2 right-3`}
+        cursor="pointer"
       />
       <Icon
         onClick={props.onComplete}
@@ -279,7 +316,6 @@ function Items({ items, setItems, updatedescription, updateTitle, deleteItem, to
   const [activeItem, setActiveItem] = useState();
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
-
   function handleDragEnd(event) {
     const { active, over } = event;
 
