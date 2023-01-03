@@ -21,6 +21,8 @@ export default function App() {
   const [labelPopup, setLabelPopup] = useState(false);
   const [label, setLabel] = useState([]);
   const [currentLabelValue, setCurrentLabelValue] = useState("");
+  const [labelEdit, setLabelEdit] = useState(false);
+  const [labelEdit1, setLabelEdit1] = useState(true);
 
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("Items"));
@@ -52,6 +54,13 @@ export default function App() {
     localStorage.setItem("pinned", JSON.stringify(pinned));
   }, [pinned]);
 
+  function handleLabelEdit(id) {
+    if((i) => i.id === id){
+    setLabelEdit((prev) => !prev);
+    setLabelEdit1((prev) => !prev);
+    }
+  }
+
   function showInputField() {
     setMakeVisible(true);
   }
@@ -74,8 +83,13 @@ export default function App() {
   }
 
   function addLabel() {
-    setLabel([currentLabelValue, ...label]);
+    setLabel([{ name: currentLabelValue, id: Math.random().toString(36).substr(2, 9) }, ...label]);
     setCurrentLabelValue("");
+  }
+
+  function deleteLabel(id) {
+    setLabel((prev) => prev.filter((p) => p.id !== id));
+
   }
 
   function deleteItem(id) {
@@ -166,6 +180,7 @@ export default function App() {
                     width="18"
                     height="18"
                     className="border border-solid border-transparent opacity-80"
+                    style={{ display: labelEdit1 ? "block" : "none" }}
                   />
                   <div className="w-[220px] p-2">{l}</div>
                   <Icon
@@ -174,6 +189,17 @@ export default function App() {
                     width="17"
                     height="17"
                     className="border border-solid border-transparent opacity-80"
+                    style={{ display: labelEdit1 ? "block" : "none" }}
+                    onClick={(e) => {handleLabelEdit(l)}}             
+                   />
+                  <Icon
+                    icon="ic:sharp-check"
+                    color="white"
+                    width="20"
+                    height="20"
+                    className="border border-solid border-transparent opacity-80"
+                    style={{ display: labelEdit ? "block" : "none" }}
+                    onClick={(e) => {handleLabelEdit(l)}}
                   />
                 </div>
               ))}
