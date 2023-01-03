@@ -6,8 +6,7 @@ import { SortableContext, useSortable, arrayMove, rectSortingStrategy } from "@d
 import { CSS } from "@dnd-kit/utilities";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { Icon } from "@iconify/react";
-import { Notifications } from "./components/Notifications";
-import { Pinnotifications } from "./components/Notifications";
+import { Notifications, Labelnotifications, Pinnotifications } from "./components/Notifications";
 import LabelsModal from "./components/LabelsModal";
 
 export default function App() {
@@ -23,6 +22,7 @@ export default function App() {
   const [currentLabelValue, setCurrentLabelValue] = useState("");
   const [labelEdit, setLabelEdit] = useState(false);
   const [labelEdit1, setLabelEdit1] = useState(true);
+  const [notLab, setNotLab] = useState(false);
 
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("Items"));
@@ -55,9 +55,9 @@ export default function App() {
   }, [pinned]);
 
   function handleLabelEdit(id) {
-    if((i) => i.id === id){
-    setLabelEdit((prev) => !prev);
-    setLabelEdit1((prev) => !prev);
+    if ((i) => i.id === id) {
+      setLabelEdit((prev) => !prev);
+      setLabelEdit1((prev) => !prev);
     }
   }
 
@@ -89,7 +89,10 @@ export default function App() {
 
   function deleteLabel(id) {
     setLabel((prev) => prev.filter((p) => p.id !== id));
-
+    setNotLab(true);
+    setTimeout(() => {
+      setNotLab(false);
+    }, 2500);
   }
 
   function deleteItem(id) {
@@ -139,6 +142,7 @@ export default function App() {
     <div>
       <Notifications notfOpen={notfOpen} />
       <Pinnotifications notfpin={notfpin} />
+      <Labelnotifications notLab={notLab} />
       <LabelsModal openPopup={labelPopup} closePopup={() => setLabelPopup(false)}>
         <div className="p-4">
           <div>
