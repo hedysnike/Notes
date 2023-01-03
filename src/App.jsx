@@ -123,71 +123,83 @@ export default function App() {
 
   return (
     <div>
+      <Notifications notfOpen={notfOpen} />
+      <Pinnotifications notfpin={notfpin} />
+      <LabelsModal openPopup={labelPopup} closePopup={() => setLabelPopup(false)}>
+        <div className="p-4">
+          <div>
+            <div className="mb-2 font-medium">
+              <h1>Edit Labels</h1>
+            </div>
+            <div className="flex items-center">
+              <Icon
+                icon="ic:sharp-plus"
+                color="white"
+                width="18"
+                height="18"
+                className="border border-solid border-transparent opacity-80"
+              />
+              <input
+                value={currentLabelValue}
+                placeholder="Create a new Label"
+                onChange={(e) => setCurrentLabelValue(e.target.value)}
+                className="bg-[#313235] outline-none w-[220px] p-2"
+              />
+              <Icon
+                onClick={(e) => {
+                  addLabel(currentLabelValue);
+                }}
+                icon="ic:sharp-check"
+                color="white"
+                width="20"
+                height="20"
+                className="opacity-80"
+                cursor="pointer"
+              />
+            </div>
+            <div className="flex flex-col">
+              {label.map((l) => (
+                <div className="flex items-center">
+                  <Icon
+                    icon="material-symbols:label"
+                    color="white"
+                    width="18"
+                    height="18"
+                    className="border border-solid border-transparent opacity-80"
+                  />
+                  <div className="w-[220px] p-2">{l}</div>
+                  <Icon
+                    icon="fa-solid:pen"
+                    color="white"
+                    width="17"
+                    height="17"
+                    className="border border-solid border-transparent opacity-80"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </LabelsModal>
       <div className="bg-black min-h-screen h-auto flex w-full overflow-hidden">
         <div className="bg-[#100F0F] h-full fixed w-[5%] text-white ]">
-          <Notifications notfOpen={notfOpen} />
-          <Pinnotifications notfpin={notfpin} />
-          <div className="relative">
-            <LabelsModal openPopup={labelPopup} closePopup={() => setLabelPopup(false)}>
-              <div className="p-4">
-                <div>
-                  <div className="mb-2 font-medium">
-                    <h1>Edit Labels</h1>
-                  </div>
-                  <div className="flex items-center">
-                    <Icon
-                      icon="ic:sharp-plus"
-                      color="white"
-                      width="18"
-                      height="18"
-                      className="border border-solid border-transparent opacity-80"
-                    />
-                    <input
-                      value={currentLabelValue}
-                      placeholder="Create a new Label"
-                      onChange={(e) => setCurrentLabelValue(e.target.value)}
-                      className="bg-[#313235] outline-none w-[220px] p-2"
-                    />
-                    <Icon
-                      onClick={(e) => {
-                        addLabel(currentLabelValue);
-                      }}
-                      icon="ic:sharp-check"
-                      color="white"
-                      width="20"
-                      height="20"
-                      className="opacity-80"
-                      cursor="pointer"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    {label.map((l) => (
-                        <div className="flex items-center">
-                          <Icon
-                            icon="material-symbols:label"
-                            color="white"
-                            width="18"
-                            height="18"
-                            className="border border-solid border-transparent opacity-80"
-                          />
-                          <div className="w-[220px] p-2">{l}</div>
-                          <Icon
-                            icon="fa-solid:pen"
-                            color="white"
-                            width="17"
-                            height="17"
-                            className="border border-solid border-transparent opacity-80"
-                          />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+          <div className="flex flex-col items-center">
+            <div className="mb-16"></div>
+            <Icon className="my-3" icon="ph:notebook-light" color="white" width="25" height="25" />
+            {label.map((l) => (
+              <div>
+                <Icon
+                  className="my-3 "
+                  icon="material-symbols:label-outline"
+                  color="white"
+                  width="25"
+                  height="25"
+                  cursor="pointer"
+                />
               </div>
-            </LabelsModal>
-            <Icon className="absolute top-64 left-6" icon="ph:notebook-light" color="white" width="25" height="25" />
-            <Icon
-              className="absolute top-72 left-6"
-              icon="material-symbols:label-outline"
+            ))}
+                        <Icon className="my-3"
+              icon="mdi:pencil-outline"
               color="white"
               width="25"
               height="25"
@@ -196,13 +208,7 @@ export default function App() {
               }}
               cursor="pointer"
             />
-            <Icon
-              className="absolute top-80 left-6"
-              icon="material-symbols:archive-outline"
-              color="white"
-              width="25"
-              height="25"
-            />
+            <Icon className="my-3" icon="material-symbols:archive-outline" color="white" width="25" height="25" />
           </div>
         </div>
         <div className="h-full w-[5%]"></div>
