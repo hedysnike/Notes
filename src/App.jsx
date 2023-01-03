@@ -23,6 +23,7 @@ export default function App() {
   const [labelEdit, setLabelEdit] = useState(false);
   const [labelEdit1, setLabelEdit1] = useState(true);
   const [notLab, setNotLab] = useState(false);
+  const [labeltext, setLabeltext] = useState("");
 
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("Items"));
@@ -93,6 +94,7 @@ export default function App() {
     setTimeout(() => {
       setNotLab(false);
     }, 2500);
+    handleLabelEdit();
   }
 
   function deleteItem(id) {
@@ -137,6 +139,20 @@ export default function App() {
       })
     );
   }
+
+  function UpdateLabel(id, name) {
+    setLabel(
+      label.map((label) => {
+        if (label.id === id) {
+          return { ...label, name };
+        }
+        return label;
+      })
+    );
+    setLabeltext("")
+  }
+
+  console.log(label);
 
   return (
     <div>
