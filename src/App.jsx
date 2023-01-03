@@ -18,6 +18,28 @@ export default function App() {
   const [notfOpen, setNotfOpen] = useState(false);
   const [notfpin, setNotfpin] = useState(false);
 
+  useEffect(() => {
+    const storedNotes = JSON.parse(localStorage.getItem("Items"));
+    if (storedNotes) {
+      setItems(storedNotes);
+    }
+  }, []);
+
+  useEffect(() => {
+    const storedPinns = JSON.parse(localStorage.getItem("pinned"));
+    if (storedPinns) {
+      setPinned(storedPinns);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("Items", JSON.stringify(items));
+  }, [items]);
+
+  useEffect(() => {
+    localStorage.setItem("pinned", JSON.stringify(pinned));
+  }, [pinned]);
+
   function showInputField() {
     setMakeVisible(true);
   }
