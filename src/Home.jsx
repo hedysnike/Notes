@@ -272,7 +272,7 @@ export default function Home() {
             <div className="mb-16"></div>
             <Icon className="my-3" icon="ph:notebook-light" color="white" width="25" height="25" />
             {labels.map((l) => (
-              <div>
+              <div key={l.id}>
                 <Icon
                   className="my-3 "
                   icon="material-symbols:label-outline"
