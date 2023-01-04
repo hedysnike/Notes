@@ -93,7 +93,7 @@ export default function Home() {
   }
 
   function deleteLabel(id) {
-    setLabel((prev) => prev.filter((p) => p.id !== id));
+    setLabels((prev) => prev.filter((p) => p.id !== id));
     setNotLab(true);
     setTimeout(() => {
       setNotLab(false);
@@ -313,7 +313,7 @@ export default function Home() {
               />
               <TextareaAutosize
                 value={currentItemValue}
-                multiline
+                multiline="true"
                 className="sm:w-96 w-60 text-sm py-2 px-3 m-1 border-none resize-none bg-[#100F0F] placeholder-gray-300 text-white outline-none"
                 placeholder="Take a note..."
                 onChange={(e) => {
