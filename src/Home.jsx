@@ -9,7 +9,6 @@ import { Icon } from "@iconify/react";
 import { Notifications, Labelnotifications, Pinnotifications } from "./components/Notifications";
 import LabelsModal from "./components/LabelsModal";
 import Label from "./components/Label";
-import { Link } from "react-router-dom";
 
 
 export default function Home() {
@@ -294,9 +293,7 @@ export default function Home() {
               }}
               cursor="pointer"
             />
-            <Link to="./archive">
             <Icon className="my-3" icon="material-symbols:archive-outline" color="white" width="25" height="25" />
-            </Link>
           </div>
         </div>
         <div className="h-full w-[5%]"></div>
