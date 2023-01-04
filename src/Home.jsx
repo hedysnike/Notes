@@ -21,13 +21,13 @@ export default function Home() {
   const [notfOpen, setNotfOpen] = useState(false);
   const [notfpin, setNotfpin] = useState(false);
   const [labelPopup, setLabelPopup] = useState(false);
-  const [label, setLabel] = useState([]);
   const [currentLabelValue, setCurrentLabelValue] = useState("");
   const [labelEdit, setLabelEdit] = useState(false);
   const [labelEdit1, setLabelEdit1] = useState(true);
   const [notLab, setNotLab] = useState(false);
   const [labeltext, setLabeltext] = useState("");
   const [archive, setArchive] = useState([]);
+  const [labels, setLabels] = useState([]);
 
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("Items"));
@@ -88,7 +88,7 @@ export default function Home() {
   }
 
   function addLabel() {
-    setLabel([{ name: currentLabelValue, id: Math.random().toString(36).substr(2, 9) }, ...label]);
+    setLabels([{ name: currentLabelValue, id: Math.random().toString(36).substr(2, 9) }, ...labels]);
     setCurrentLabelValue("");
   }
 
@@ -154,17 +154,17 @@ export default function Home() {
 
   function UpdateLabel(id, name) {
     setLabel(
-      label.map((label) => {
-        if (label.id === id) {
-          return { ...label, name };
+      labels.map((labels) => {
+        if (labels.id === id) {
+          return { ...labels, name };
         }
-        return label;
+        return labels;
       })
     );
     setLabeltext("");
   }
 
-  console.log(label);
+  console.log(labels);
 
   return (
     <div>
@@ -204,7 +204,7 @@ export default function Home() {
               />
             </div>
             <div className="flex flex-col">
-              {label.map((l) => (
+              {labels.map((l) => (
                 <div className="flex items-center" key={l.id}>
                   <Icon
                     icon="material-symbols:label"
@@ -271,7 +271,7 @@ export default function Home() {
           <div className="flex flex-col items-center">
             <div className="mb-16"></div>
             <Icon className="my-3" icon="ph:notebook-light" color="white" width="25" height="25" />
-            {label.map((l) => (
+            {labels.map((l) => (
               <div>
                 <Icon
                   className="my-3 "
