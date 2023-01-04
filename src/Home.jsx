@@ -153,7 +153,7 @@ export default function Home() {
   }
 
   function UpdateLabel(id, name) {
-    setLabel(
+    setLabels(
       labels.map((labels) => {
         if (labels.id === id) {
           return { ...labels, name };
