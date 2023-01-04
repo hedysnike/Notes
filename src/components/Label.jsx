@@ -2,10 +2,8 @@ import React from "react";
 import * as Popover from "@radix-ui/react-popover";
 import { Icon } from "@iconify/react";
 import * as Checkbox from "@radix-ui/react-checkbox";
-import { useItems } from "../useItems";
 
 export default function Label() {
-  const { label } = useItems();
 
   return (
     <Popover.Root>

@@ -1,23 +1,23 @@
-import { useEffect, useState, createContext } from "react";
+// import { useEffect, useState, createContext } from "react";
 
-export const useItems = () => {
-  const [label, setLabel] = useState([]);
+// export const useItems = () => {
+//   const [label, setLabel] = useState([]);
 
-  useEffect(() => {
-    setLabel(JSON.parse(localStorage.getItem("label")) || []);
-  }, []);
+//   useEffect(() => {
+//     setLabel(JSON.parse(localStorage.getItem("label")) || []);
+//   }, []);
 
-  function updatesetLabel(labels) {  
-    localStorage.setItem("label", JSON.stringify(labels));
-    setLabel(labels);
-  }
-  return { label, setLabel };
-};
+//   function updatesetLabel(labels) {  
+//     localStorage.setItem("label", JSON.stringify(labels));
+//     setLabel(labels);
+//   }
+//   return { label, setLabel };
+// };
 
-export const itemsContext = createContext();
+// export const itemsContext = createContext();
 
-export const ItemsProvider = ({ children }) => {
-  const { label, setLabel } = useItems();
+// export const ItemsProvider = ({ children }) => {
+//   const { label, setLabel } = useItems();
 
-  return <itemsContext.Provider value={{ label, setLabel }}>{children}</itemsContext.Provider>;
-};
+//   return <itemsContext.Provider value={{ label, setLabel }}>{children}</itemsContext.Provider>;
+// };
