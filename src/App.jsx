@@ -118,6 +118,14 @@ export default function App() {
     }
   }
 
+  function toggleArchived(i) {
+    if (archive.includes(i)) {
+      setArchive(archive.filter((p) => p !== i));
+    } else {
+      setArchive([...archive, i]);
+    }
+  }
+
   function updatedescription(id, description) {
     setItems(
       items.map((item) => {
@@ -193,7 +201,7 @@ export default function App() {
             </div>
             <div className="flex flex-col">
               {label.map((l) => (
-                <div className="flex items-center">
+                <div className="flex items-center" key={l.id}>
                   <Icon
                     icon="material-symbols:label"
                     color="white"
@@ -202,7 +210,27 @@ export default function App() {
                     className="border border-solid border-transparent opacity-80"
                     style={{ display: labelEdit1 ? "block" : "none" }}
                   />
-                  <div className="w-[220px] p-2">{l}</div>
+                  <Icon
+                    icon="mdi:trash-can-outline"
+                    color="white"
+                    width="18"
+                    height="18"
+                    className="border border-solid border-transparent opacity-80"
+                    style={{ display: labelEdit ? "block" : "none" }}
+                    onClick={(e) => deleteLabel(l.id)}
+                    cursor="pointer"
+                  />
+                  <div className="w-[220px] p-2" style={{ display: labelEdit1 ? "block" : "none" }}>
+                    {l.name}
+                  </div>
+                  <div className="w-[220px] p-2 outline-none" 
+                  suppressContentEditableWarning={true}
+                  contentEditable
+                  value={labeltext}
+                  onInput={(e) => setLabeltext(e.target.innerText)}
+                  style={{ display: labelEdit ? "block" : "none" }}>
+                    {l.name}
+                  </div>
                   <Icon
                     icon="fa-solid:pen"
                     color="white"
@@ -210,8 +238,10 @@ export default function App() {
                     height="17"
                     className="border border-solid border-transparent opacity-80"
                     style={{ display: labelEdit1 ? "block" : "none" }}
-                    onClick={(e) => {handleLabelEdit(l)}}             
-                   />
+                    onClick={(e) => {
+                      handleLabelEdit(l.id);
+                    }}
+                  />
                   <Icon
                     icon="ic:sharp-check"
                     color="white"
@@ -219,7 +249,10 @@ export default function App() {
                     height="20"
                     className="border border-solid border-transparent opacity-80"
                     style={{ display: labelEdit ? "block" : "none" }}
-                    onClick={(e) => {handleLabelEdit(l)}}
+                    onClick={(e) => {
+                      handleLabelEdit(l.id);
+                      UpdateLabel(l.id, labeltext);
+                    }}
                   />
                 </div>
               ))}
@@ -244,7 +277,8 @@ export default function App() {
                 />
               </div>
             ))}
-                        <Icon className="my-3"
+            <Icon
+              className="my-3"
               icon="mdi:pencil-outline"
               color="white"
               width="25"
@@ -297,6 +331,8 @@ export default function App() {
             deleteItem={deleteItem}
             togglePinned={togglePinned}
             pinned={pinned}
+            archive={archive}
+            toggleArchived={toggleArchived}
           />
         </div>
       </div>
@@ -385,6 +421,7 @@ export function Item(props) {
         cursor="pointer"
       />
       <Icon
+        onClick={props.onArchive}
         icon="material-symbols:archive-outline"
         color="white"
         width="22"
@@ -396,7 +433,7 @@ export function Item(props) {
   );
 }
 
-function Items({ items, setItems, updatedescription, updateTitle, deleteItem, togglePinned, pinned }) {
+function Items({ items, setItems, updatedescription, updateTitle, deleteItem, togglePinned, pinned, archive, toggleArchived }) {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState();
 
@@ -496,6 +533,25 @@ function Items({ items, setItems, updatedescription, updateTitle, deleteItem, to
           </div>
         </Modal>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-20">
+          {archive.map((a) => (
+            <Item
+              id={a.id}
+              key={a.id}
+              title={a.title}
+              description={a.description}
+              onClick={() => {
+                setOpenModal(true);
+                setActiveItem(b);
+              }}
+              onComplete={(e) => deleteItem(a.id)}
+              onToggle={(e) => togglePinned(a)}
+              pinned={a.pinned}
+              archive={a.archive}
+              onArchive={(e) => toggleArchived(a)}
+            />
+          ))}
+        </div>
+        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-20">
           {pinned.map((b) => (
             <Item
               id={b.id}
@@ -529,6 +585,8 @@ function Items({ items, setItems, updatedescription, updateTitle, deleteItem, to
                 onComplete={(e) => deleteItem(i.id)}
                 onToggle={(e) => togglePinned(i)}
                 pinned={i.pinned}
+                archive={i.archive}
+                onArchive={(e) => toggleArchived(i)}
               />
             ))}
         </div>
