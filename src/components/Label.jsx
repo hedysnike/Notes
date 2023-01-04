@@ -1,19 +1,30 @@
 import React from "react";
+import * as Popover from '@radix-ui/react-popover';
+import { Icon } from "@iconify/react";
 
 
-export default function Label(setLabel){
-const label = setLabel
-
-    return(
-        <div className='bg-[#2D2E30] w-60 h-auto'>
-            <div>Note Label</div>
-            {Label.map((l) => (
-             <div>{i}</div>
-            ))}
-        </div>
-    )
+export default function Label() {
+  return (
+    <Popover.Root>
+      <Popover.Trigger asChild>
+      <Icon icon="material-symbols:bookmark-outline" color="white" width="22" height="20" />
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content className="PopoverContent" sideOffset={5}>
+          <div> <div>
+            
+            
+            
+            
+            
+            </div>babeeeeeee
+          </div>
+          <Popover.Arrow className="PopoverArrow" />
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover.Root>
+  );
 }
 
-export function Label() {
+// className={`${hovered ? "" : "hidden"} bottom-2 left-3`}
 
-}

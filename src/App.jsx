@@ -8,6 +8,7 @@ import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { Icon } from "@iconify/react";
 import { Notifications, Labelnotifications, Pinnotifications } from "./components/Notifications";
 import LabelsModal from "./components/LabelsModal";
+import Label from "./components/Label";
 
 export default function App() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -24,6 +25,7 @@ export default function App() {
   const [labelEdit1, setLabelEdit1] = useState(true);
   const [notLab, setNotLab] = useState(false);
   const [labeltext, setLabeltext] = useState("");
+  const [archive, setArchive] = useState([]);
 
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("Items"));
@@ -157,7 +159,7 @@ export default function App() {
         return label;
       })
     );
-    setLabeltext("")
+    setLabeltext("");
   }
 
   console.log(label);
@@ -223,12 +225,14 @@ export default function App() {
                   <div className="w-[220px] p-2" style={{ display: labelEdit1 ? "block" : "none" }}>
                     {l.name}
                   </div>
-                  <div className="w-[220px] p-2 outline-none" 
-                  suppressContentEditableWarning={true}
-                  contentEditable
-                  value={labeltext}
-                  onInput={(e) => setLabeltext(e.target.innerText)}
-                  style={{ display: labelEdit ? "block" : "none" }}>
+                  <div
+                    className="w-[220px] p-2 outline-none"
+                    suppressContentEditableWarning={true}
+                    contentEditable
+                    value={labeltext}
+                    onInput={(e) => setLabeltext(e.target.innerText)}
+                    style={{ display: labelEdit ? "block" : "none" }}
+                  >
                     {l.name}
                   </div>
                   <Icon
@@ -292,6 +296,7 @@ export default function App() {
           </div>
         </div>
         <div className="h-full w-[5%]"></div>
+        {/* Sidebar Above Content Below */}
         <div className="flex-none w-[95%]">
           <div className="flex justify-center mb-10">
             <div className="flex flex-col bg-[#100F0F] mt-16 rounded-xl shadow-md shadow-[#100F0F]">
@@ -343,6 +348,7 @@ export default function App() {
 export function Item(props) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
   const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -388,14 +394,9 @@ export function Item(props) {
         className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
         cursor="pointer"
       />
-      <Icon
-        icon="material-symbols:bookmark-outline"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-3`}
-        cursor="pointer"
-      />
+      <div className={`${hovered ? "" : "hidden"} absolute bottom-2 left-3`}>
+        <Label cursor="pointer" />
+      </div>
       <Icon
         icon="mdi:paint-outline"
         color="white"
