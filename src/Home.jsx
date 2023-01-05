@@ -1,16 +1,15 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import "./index.css";
 import Modal from "./components/Modal";
 import { DndContext, useSensor, useSensors, PointerSensor, closestCenter } from "@dnd-kit/core";
-import { SortableContext, useSortable, arrayMove, rectSortingStrategy } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import { SortableContext, arrayMove, rectSortingStrategy } from "@dnd-kit/sortable";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { Icon } from "@iconify/react";
 import { Notifications, Labelnotifications, Pinnotifications } from "./components/Notifications";
 import LabelsModal from "./components/LabelsModal";
-import Label from "./components/Label";
 import { Link } from "react-router-dom";
 import { useLabels } from "./useLabels";
+import { Item } from "./components/Item";
 
 export default function Home() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -62,11 +61,9 @@ export default function Home() {
     localStorage.setItem("pinned", JSON.stringify(pinned));
   }, [pinned]);
 
-  function handleLabelEdit(id) {
-    if ((i) => i.id === id) {
-      setLabelEdit((prev) => !prev);
-      setLabelEdit1((prev) => !prev);
-    }
+  function handleLabelEdit() {
+    setLabelEdit((prev) => !prev);
+    setLabelEdit1((prev) => !prev);
   }
 
   function showInputField() {
@@ -195,7 +192,7 @@ export default function Home() {
                 className="bg-[#313235] outline-none w-[220px] p-2"
               />
               <Icon
-                onClick={(e) => {
+                onClick={() => {
                   addLabel(currentLabelValue);
                 }}
                 icon="ic:sharp-check"
@@ -224,7 +221,7 @@ export default function Home() {
                     height="18"
                     className="border border-solid border-transparent opacity-80"
                     style={{ display: labelEdit ? "block" : "none" }}
-                    onClick={(e) => deleteLabel(l.id)}
+                    onClick={() => deleteLabel(l.id)}
                     cursor="pointer"
                   />
                   <div className="w-[220px] p-2" style={{ display: labelEdit1 ? "block" : "none" }}>
@@ -247,7 +244,7 @@ export default function Home() {
                     height="17"
                     className="border border-solid border-transparent opacity-80"
                     style={{ display: labelEdit1 ? "block" : "none" }}
-                    onClick={(e) => {
+                    onClick={() => {
                       handleLabelEdit(l.id);
                     }}
                   />
@@ -258,7 +255,7 @@ export default function Home() {
                     height="20"
                     className="border border-solid border-transparent opacity-80"
                     style={{ display: labelEdit ? "block" : "none" }}
-                    onClick={(e) => {
+                    onClick={() => {
                       handleLabelEdit(l.id);
                       UpdateLabel(l.id, labeltext);
                     }}
@@ -326,7 +323,7 @@ export default function Home() {
               />
             </div>
             <button
-              onClick={(e) => {
+              onClick={() => {
                 hideInputField();
                 addItem(currentItemValue, currentItemTitle);
               }}
@@ -348,94 +345,6 @@ export default function Home() {
           />
         </div>
       </div>
-    </div>
-  );
-}
-
-export function Item(props) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
-  const [hovered, setHovered] = useState(false);
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    zIndex: hovered ? 10 : 0,
-  };
-
-  return (
-    <div
-      ref={setNodeRef}
-      className="bg-[#100F0F] hover:bg-[#1b1919] text-white m-3 rounded-xl relative hover:shadow-md hover:shadow-[#1b1919] overflow-hidden max-h-96"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() =>
-        setTimeout(() => {
-          setHovered(false);
-        }, 150)
-      }
-      style={style}
-      {...attributes}
-      {...listeners}
-    >
-      <div className="p-4 pb-7 text-zinc-300 whitespace-pre-wrap text-sm mb-8" onClick={props.onClick}>
-        <div className="text-base text-white mb-3">
-          {props.title} <br />
-        </div>
-        {props.description}
-      </div>
-      <Icon
-        onClick={props.onToggle}
-        icon="ic:outline-push-pin"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute top-2 right-3`}
-        cursor="pointer"
-      />
-      <Icon
-        onClick={props.onComplete}
-        icon="mdi:trash-can-outline"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
-        cursor="pointer"
-      />
-      <div className={`${hovered ? "" : "hidden"} absolute bottom-2 left-3`}>
-        <Label cursor="pointer" />
-      </div>
-      <Icon
-        icon="mdi:paint-outline"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-10`}
-        cursor="pointer"
-      />
-      <Icon
-        icon="material-symbols:image"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[68px]`}
-        cursor="pointer"
-      />
-      <Icon
-        icon="mdi:format-list-checkbox"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[96px]`}
-        cursor="pointer"
-      />
-      <Icon
-        onClick={props.onArchive}
-        icon="material-symbols:archive-outline"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[124px]`}
-        cursor="pointer"
-      />
     </div>
   );
 }
@@ -476,7 +385,7 @@ function Items({
         <Modal open={openModal} onClose={() => setOpenModal(false)}>
           <div
             placeholder="Title"
-            contenteditable="true"
+            contentEditable="true"
             className="outline-none whitespace-pre-wrap mb-3"
             onInput={(e) => updateTitle(activeItem.id, e.target.innerText)}
           >
@@ -484,7 +393,7 @@ function Items({
           </div>
           <div
             placeholder="Notes"
-            contenteditable="true"
+            contentEditable="true"
             className="outline-none whitespace-pre-wrap mb-6"
             onInput={(e) => updatedescription(activeItem.id, e.target.innerText)}
           >
@@ -558,13 +467,13 @@ function Items({
               description={a.description}
               onClick={() => {
                 setOpenModal(true);
-                setActiveItem(b);
+                setActiveItem(a.id);
               }}
-              onComplete={(e) => deleteItem(a.id)}
-              onToggle={(e) => togglePinned(a)}
+              onComplete={() => deleteItem(a.id)}
+              onToggle={() => togglePinned(a)}
               pinned={a.pinned}
               archive={a.archive}
-              onArchive={(e) => toggleArchived(a)}
+              onArchive={() => toggleArchived(a)}
             />
           ))}
         </div>
@@ -577,10 +486,10 @@ function Items({
               description={b.description}
               onClick={() => {
                 setOpenModal(true);
-                setActiveItem(b);
+                setActiveItem(b.id);
               }}
-              onComplete={(e) => deleteItem(b.id)}
-              onToggle={(e) => togglePinned(b)}
+              onComplete={() => deleteItem(b.id)}
+              onToggle={() => togglePinned(b)}
               pinned={b.pinned}
             />
           ))}
@@ -599,11 +508,11 @@ function Items({
                   setOpenModal(true);
                   setActiveItem(i);
                 }}
-                onComplete={(e) => deleteItem(i.id)}
-                onToggle={(e) => togglePinned(i)}
+                onComplete={() => deleteItem(i.id)}
+                onToggle={() => togglePinned(i)}
                 pinned={i.pinned}
                 archive={i.archive}
-                onArchive={(e) => toggleArchived(i)}
+                onArchive={() => toggleArchived(i)}
               />
             ))}
         </div>
