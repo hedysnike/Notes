@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./index.css";
 import Modal from "./components/Modal";
 import { DndContext, useSensor, useSensors, PointerSensor, closestCenter } from "@dnd-kit/core";
@@ -9,6 +9,8 @@ import { Icon } from "@iconify/react";
 import { Notifications, Labelnotifications, Pinnotifications } from "./components/Notifications";
 import LabelsModal from "./components/LabelsModal";
 import Label from "./components/Label";
+import { Link } from "react-router-dom";
+import { useItems } from "./useItems";
 
 
 export default function Home() {
@@ -26,7 +28,8 @@ export default function Home() {
   const [notLab, setNotLab] = useState(false);
   const [labeltext, setLabeltext] = useState("");
   const [archive, setArchive] = useState([]);
-  const [labels, setLabels] = useState([]);
+
+  const { labels, updatesetLabel } = useItems();
 
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("Items"));
@@ -87,12 +90,12 @@ export default function Home() {
   }
 
   function addLabel() {
-    setLabels([{ name: currentLabelValue, id: Math.random().toString(36).substr(2, 9) }, ...labels]);
+    updatesetLabel([{ name: currentLabelValue, id: Math.random().toString(36).substr(2, 9) }, ...labels]);
     setCurrentLabelValue("");
   }
 
   function deleteLabel(id) {
-    setLabels((prev) => prev.filter((p) => p.id !== id));
+    updatesetLabel((prev) => prev.filter((p) => p.id !== id));
     setNotLab(true);
     setTimeout(() => {
       setNotLab(false);
@@ -152,8 +155,8 @@ export default function Home() {
   }
 
   function UpdateLabel(id, name) {
-    setLabels(
-      labels.map((labels) => {
+    updatesetLabel(
+      labels?.map((labels) => {
         if (labels.id === id) {
           return { ...labels, name };
         }
@@ -203,7 +206,7 @@ export default function Home() {
               />
             </div>
             <div className="flex flex-col">
-              {labels.map((l) => (
+              {labels?.map((l) => (
                 <div className="flex items-center" key={l.id}>
                   <Icon
                     icon="material-symbols:label"
@@ -270,7 +273,7 @@ export default function Home() {
           <div className="flex flex-col items-center">
             <div className="mb-16"></div>
             <Icon className="my-3" icon="ph:notebook-light" color="white" width="25" height="25" />
-            {labels.map((l) => (
+            {labels?.map((l) => (
               <div key={l.id}>
                 <Icon
                   className="my-3 "
@@ -293,7 +296,9 @@ export default function Home() {
               }}
               cursor="pointer"
             />
+             <Link to="./archive">
             <Icon className="my-3" icon="material-symbols:archive-outline" color="white" width="25" height="25" />
+            </Link>
           </div>
         </div>
         <div className="h-full w-[5%]"></div>
@@ -349,7 +354,6 @@ export default function Home() {
 export function Item(props) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
   const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -370,7 +374,7 @@ export function Item(props) {
       style={style}
       {...attributes}
       {...listeners}
-    >
+    > 
       <div className="p-4 pb-7 text-zinc-300 whitespace-pre-wrap text-sm mb-8" onClick={props.onClick}>
         <div className="text-base text-white mb-3">
           {props.title} <br />
