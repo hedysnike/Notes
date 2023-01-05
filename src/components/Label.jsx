@@ -2,8 +2,11 @@ import React from "react";
 import * as Popover from "@radix-ui/react-popover";
 import * as Checkbox from "@radix-ui/react-checkbox";
 import { Icon } from "@iconify/react";
+import { useLabels } from "../useLabels";
 
-export default function LabelPopover({ checked, labels, onCheckedChange }) {
+export default function LabelPopover({ checked, onCheckedChange }) {
+  const { labels } = useLabels();
+
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
@@ -14,7 +17,7 @@ export default function LabelPopover({ checked, labels, onCheckedChange }) {
           <div>
             <div className="text-white p-2">Label note</div>
             <div className="pb-2">
-              {labels?.map((z) => (
+              {labels.map((z) => (
                 <Checkbox.Root
                   key={z.id}
                   id="c2"
