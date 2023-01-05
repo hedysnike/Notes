@@ -36,6 +36,13 @@ export function Item(props) {
         </div>
         {props.description}
       </div>
+      <div className="p-2 flex"> 
+        {props?.labels?.map?.((c) => (
+          <div key={c.id} className="pl-4 border border-solid w-auto">
+            {c.name}
+         </div>
+        ))}
+      </div>
       <Icon
         onClick={props.onToggle}
         icon="ic:outline-push-pin"
