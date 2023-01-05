@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
 import "./index.css";
-import Modal from "./components/Modal";
+import { Link } from "react-router-dom";
 import { DndContext, useSensor, useSensors, PointerSensor, closestCenter } from "@dnd-kit/core";
 import { SortableContext, arrayMove, rectSortingStrategy } from "@dnd-kit/sortable";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { Icon } from "@iconify/react";
 import { Notifications, Labelnotifications, Pinnotifications } from "./components/Notifications";
 import LabelsModal from "./components/LabelsModal";
-import { Link } from "react-router-dom";
-import { useLabels } from "./useLabels";
 import { Item } from "./components/Item";
+import Modal from "./components/Modal";
+import { useLabels } from "./useLabels";
+import { useItems } from "./useItems";
 
 export default function Home() {
+  const { items, setItems } = useItems();
   const [currentItemValue, setCurrentItemValue] = useState("");
-  const [items, setItems] = useState([]);
   const [currentItemTitle, setCurrentItemTitle] = useState("");
   const [makeVisible, setMakeVisible] = useState(false);
   const [pinned, setPinned] = useState([]);
@@ -80,6 +81,7 @@ export default function Home() {
         id: Math.random().toString(36).substr(2, 9),
         title: currentItemTitle,
         description: currentItemValue,
+        labels: [],
       },
       ...items,
     ]);
@@ -163,8 +165,6 @@ export default function Home() {
     );
     setLabeltext("");
   }
-
-  console.log(labels);
 
   return (
     <div>
@@ -461,18 +461,14 @@ function Items({
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-20">
           {archive.map((a) => (
             <Item
-              id={a.id}
+              {...a}
               key={a.id}
-              title={a.title}
-              description={a.description}
               onClick={() => {
                 setOpenModal(true);
                 setActiveItem(a.id);
               }}
               onComplete={() => deleteItem(a.id)}
               onToggle={() => togglePinned(a)}
-              pinned={a.pinned}
-              archive={a.archive}
               onArchive={() => toggleArchived(a)}
             />
           ))}
@@ -480,10 +476,8 @@ function Items({
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-20">
           {pinned.map((b) => (
             <Item
-              id={b.id}
+              {...b}
               key={b.id}
-              title={b.title}
-              description={b.description}
               onClick={() => {
                 setOpenModal(true);
                 setActiveItem(b.id);
@@ -499,10 +493,8 @@ function Items({
             .filter((item) => !pinned.includes(item))
             .map((i) => (
               <Item
-                id={i.id}
+                {...i}
                 key={i.id}
-                title={i.title}
-                description={i.description}
                 onClick={() => {
                   console.log("clicked", i);
                   setOpenModal(true);
@@ -510,8 +502,6 @@ function Items({
                 }}
                 onComplete={() => deleteItem(i.id)}
                 onToggle={() => togglePinned(i)}
-                pinned={i.pinned}
-                archive={i.archive}
                 onArchive={() => toggleArchived(i)}
               />
             ))}

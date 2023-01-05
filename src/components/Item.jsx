@@ -2,11 +2,15 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
+import { useItems } from "../useItems";
+import { useLabels } from "../useLabels";
 import Label from "./Label";
 
 export function Item(props) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ props: props.id });
   const [hovered, setHovered] = useState(false);
+  const { setItems } = useItems();
+  const { labels } = useLabels();
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -53,7 +57,21 @@ export function Item(props) {
         cursor="pointer"
       />
       <div className={`${hovered ? "" : "hidden"} absolute bottom-2 left-3`}>
-        <Label cursor="pointer" />
+        <Label
+          labels={labels}
+          checked={props?.labels?.map?.((l) => l.id)}
+          onCheckedChange={(c, l) => {
+            setItems((prev) => {
+              const item = prev.find((z) => z.id === props.id);
+              if (c) {
+                item.labels.push(l);
+              } else {
+                item.labels = item.labels.filter((z) => z !== l);
+              }
+              return [...prev];
+            });
+          }}
+        />
       </div>
       <Icon
         icon="mdi:paint-outline"
