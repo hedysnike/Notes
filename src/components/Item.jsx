@@ -1,4 +1,5 @@
 import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import Label from "./Label";
