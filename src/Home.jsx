@@ -10,8 +10,7 @@ import { Notifications, Labelnotifications, Pinnotifications } from "./component
 import LabelsModal from "./components/LabelsModal";
 import Label from "./components/Label";
 import { Link } from "react-router-dom";
-import { useItems } from "./useItems";
-
+import { useLabels } from "./useLabels";
 
 export default function Home() {
   const [currentItemValue, setCurrentItemValue] = useState("");
@@ -29,11 +28,9 @@ export default function Home() {
   const [labeltext, setLabeltext] = useState("");
   const [archive, setArchive] = useState([]);
 
-  const { labels, updatesetLabel } = useItems();
+  const { labels, updatesetLabel } = useLabels();
 
-  useEffect(() => {
-  }, [labels]);
-
+  useEffect(() => {}, [labels]);
 
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("Items"));
@@ -300,8 +297,8 @@ export default function Home() {
               }}
               cursor="pointer"
             />
-             <Link to="./archive">
-            <Icon className="my-3" icon="material-symbols:archive-outline" color="white" width="25" height="25" />
+            <Link to="./archive">
+              <Icon className="my-3" icon="material-symbols:archive-outline" color="white" width="25" height="25" />
             </Link>
           </div>
         </div>
@@ -378,7 +375,7 @@ export function Item(props) {
       style={style}
       {...attributes}
       {...listeners}
-    > 
+    >
       <div className="p-4 pb-7 text-zinc-300 whitespace-pre-wrap text-sm mb-8" onClick={props.onClick}>
         <div className="text-base text-white mb-3">
           {props.title} <br />
@@ -443,7 +440,17 @@ export function Item(props) {
   );
 }
 
-function Items({ items, setItems, updatedescription, updateTitle, deleteItem, togglePinned, pinned, archive, toggleArchived }) {
+function Items({
+  items,
+  setItems,
+  updatedescription,
+  updateTitle,
+  deleteItem,
+  togglePinned,
+  pinned,
+  archive,
+  toggleArchived,
+}) {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState();
 

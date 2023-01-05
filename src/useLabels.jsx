@@ -1,6 +1,6 @@
 import { useEffect, useState, createContext } from "react";
 
-export const useItems = () => {
+export const useLabels = () => {
   const [labels, setLabels] = useState([]);
 
   useEffect(() => {
@@ -16,8 +16,8 @@ export const useItems = () => {
 
 export const itemsContext = createContext();
 
-export const ItemsProvider = ({ children }) => {
-  const { labels, updatesetLabel } = useItems();
+export const LabelsProvider = ({ children }) => {
+  const { labels, updatesetLabel } = useLabels();
 
   return <itemsContext.Provider value={{ labels, updatesetLabel }}>{children}</itemsContext.Provider>;
 };
