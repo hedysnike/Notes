@@ -1,23 +1,27 @@
+import { useContext } from "react";
 import { useEffect, useState, createContext } from "react";
 
-export const useLabels = () => {
+export const labelsContext = createContext();
+
+export const useLabels = () => useContext(labelsContext);
+
+export const useLabelsProvider = () => {
   const [labels, setLabels] = useState([]);
+
+  function updatesetLabel(labels) {
+    localStorage.setItem("labels", JSON.stringify(labels));
+    setLabels(labels);
+  }
 
   useEffect(() => {
     setLabels(JSON.parse(localStorage.getItem("labels")) || []);
   }, []);
 
-  function updatesetLabel(labels) {  
-    localStorage.setItem("labels", JSON.stringify(labels));
-    setLabels(labels);
-  }
   return { labels, updatesetLabel };
 };
 
-export const itemsContext = createContext();
-
 export const LabelsProvider = ({ children }) => {
-  const { labels, updatesetLabel } = useLabels();
+  const { labels, updatesetLabel } = useLabelsProvider();
 
-  return <itemsContext.Provider value={{ labels, updatesetLabel }}>{children}</itemsContext.Provider>;
+  return <labelsContext.Provider value={{ labels, updatesetLabel }}>{children}</labelsContext.Provider>;
 };
