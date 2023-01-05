@@ -32,6 +32,10 @@ export default function Home() {
   const { labels, updatesetLabel } = useItems();
 
   useEffect(() => {
+  }, [labels]);
+
+
+  useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("Items"));
     if (storedNotes) {
       setItems(storedNotes);

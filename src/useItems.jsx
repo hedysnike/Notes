@@ -4,10 +4,8 @@ export const useItems = () => {
   const [labels, setLabels] = useState([]);
 
   useEffect(() => {
-    setLabels(JSON.parse(localStorage.getItem("label")) || []);
+    setLabels(JSON.parse(localStorage.getItem("labels")) || []);
   }, []);
-
-  console.log(labels)
 
   function updatesetLabel(labels) {  
     localStorage.setItem("labels", JSON.stringify(labels));

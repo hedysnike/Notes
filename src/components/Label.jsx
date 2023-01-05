@@ -3,10 +3,12 @@
   import { Icon } from "@iconify/react";
   import * as Checkbox from "@radix-ui/react-checkbox";
   import { useItems } from "../useItems";
+  import { itemsContext } from "../useItems";
 
   export default function Label() {
     const { labels, updatesetLabel } = useItems();
-
+    console.log(labels)
+    
     return (
       <Popover.Root>
         <Popover.Trigger asChild>
