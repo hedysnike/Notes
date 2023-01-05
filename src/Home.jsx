@@ -458,22 +458,7 @@ function Items({
             />
           </div>
         </Modal>
-        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-20">
-          {archive.map((a) => (
-            <Item
-              {...a}
-              key={a.id}
-              onClick={() => {
-                setOpenModal(true);
-                setActiveItem(a.id);
-              }}
-              onComplete={() => deleteItem(a.id)}
-              onToggle={() => togglePinned(a)}
-              onArchive={() => toggleArchived(a)}
-            />
-          ))}
-        </div>
-        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-20">
+        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16">
           {pinned.map((b) => (
             <Item
               {...b}

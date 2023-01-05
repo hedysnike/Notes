@@ -5,8 +5,9 @@ import { useState } from "react";
 import { useItems } from "../useItems";
 import Label from "./Label";
 
+
 export function Item(props) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ props: props.id });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
   const [hovered, setHovered] = useState(false);
   const { setItems } = useItems();
 
@@ -30,15 +31,15 @@ export function Item(props) {
       {...attributes}
       {...listeners}
     >
-      <div className="p-4 pb-7 text-zinc-300 whitespace-pre-wrap text-sm mb-8" onClick={props.onClick}>
-        <div className="text-base text-white mb-3">
+      <div className="p-3 pb-2 text-zinc-300 whitespace-pre-wrap text-sm" onClick={props.onClick}>
+        <div className="text-base text-white mb-2">
           {props.title} <br />
         </div>
         {props.description}
       </div>
-      <div className="p-2 flex"> 
+      <div className="p-2 flex gap-1 text-[#c2a2de] mb-7"> 
         {props?.labels?.map?.((c) => (
-          <div key={c.id} className="pl-4 border border-solid w-auto">
+          <div key={c.id} className="outline-none text-xs p-[5px] py-[3px] border border-solid border-[#c2a2de] w-auto">
             {c.name}
          </div>
         ))}
@@ -61,7 +62,7 @@ export function Item(props) {
         className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
         cursor="pointer"
       />
-      <div className={`${hovered ? "" : "hidden"} absolute bottom-2 left-3`}>
+      <div className="absolute bottom-2 left-3">
         <Label
           checked={props?.labels?.map?.((l) => l.id)}
           onCheckedChange={(c, l) => {
