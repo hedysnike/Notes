@@ -17,15 +17,16 @@ export default function Labelsmap() {
 
   const { labels, updatesetLabel } = useLabels();
   const { items, setItems } = useItems();
-  const foundLabel = labels.find(label => label.id === id);
-  const filteredItems = items.filter(item => item.labels.some(label => label.id === id));
-
 
   const { id } = useParams();
 
-  const ItemsLabel = labels.filter(label => label.id === id);
-  console.log(items)
+  const foundLabel = labels.filter(label => label.id === id)[0];
 
+
+  const filteredItems = items.filter(item =>
+    item.labels.some(label => label.id === id)
+  );
+  
 
   function addLabel() {
     updatesetLabel([{ name: currentLabelValue, id: Math.random().toString(36).substr(2, 9) }, ...labels]);
@@ -58,8 +59,6 @@ export default function Labelsmap() {
     setLabeltext("");
   }
 
-  console.log(items)
-  console.log(ItemsLabel)
 
   return (
     <div className="bg-black min-h-screen h-auto flex w-full overflow-hidden">
@@ -240,10 +239,9 @@ export default function Labelsmap() {
             </div>
           </Modal> */}
         </div>
-        <div className="flex justify-center text-2xl text-white">{ItemsLabel.name}</div>
+        <div className="flex justify-center text-2xl text-white">{foundLabel.name}</div>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
-          {filteredItems
-            .map((i) => (
+          {filteredItems.map((i) => (
             <Item {...i} key={i.id} onComplete={() => deleteItem(i.id)} />
           ))}
         </div>
