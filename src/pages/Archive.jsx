@@ -93,7 +93,8 @@ export default function Archive({ toggleArchived, deleteItem, updatedescription,
             </div>
           </Modal>
         </div>
-        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16 mt-52">
+        <div className="flex justify-center text-white mt-10 text-4xl">Archived</div>
+        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16 mt-24">
           {items
             .map((a) => (
               <ArchiveItem

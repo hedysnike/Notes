@@ -97,7 +97,7 @@ export function ArchiveItem(props) {
       />
       <Icon
         onClick={props.onArchive}
-        icon="material-symbols:archive-outline"
+        icon="ic:outline-unarchive"
         color="white"
         width="22"
         height="20"

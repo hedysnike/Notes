@@ -4,7 +4,7 @@ import { DndContext, useSensor, useSensors, PointerSensor, closestCenter } from 
 import { SortableContext, arrayMove, rectSortingStrategy } from "@dnd-kit/sortable";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { Icon } from "@iconify/react";
-import { Notifications, Labelnotifications, Pinnotifications } from "../components/Notifications";
+import { Notifications, Labelnotifications, ArchiveNotification } from "../components/Notifications";
 import LabelsModal from "../components/LabelsModal";
 import { Item } from "../components/Item";
 import Modal from "../components/Modal";
@@ -19,7 +19,7 @@ export default function Home() {
   const [makeVisible, setMakeVisible] = useState(false);
   const [pinned, setPinned] = useState([]);
   const [notfOpen, setNotfOpen] = useState(false);
-  const [notfpin, setNotfpin] = useState(false);
+  const [notfarc, setNotfarc] = useState(false);
   const [labelPopup, setLabelPopup] = useState(false);
   const [currentLabelValue, setCurrentLabelValue] = useState("");
   const [labelEdit, setLabelEdit] = useState(false);
@@ -117,10 +117,6 @@ export default function Home() {
       setPinned(pinned.filter((p) => p !== i));
     } else {
       setPinned([...pinned, i]);
-      setNotfpin(true);
-      setTimeout(() => {
-        setNotfpin(false);
-      }, 2500);
     }
   }
 
@@ -129,6 +125,11 @@ export default function Home() {
       setArchive(archive.filter((p) => p !== i));
     } else {
       setArchive([...archive, i]);
+      setNotfarc(true);
+      setTimeout(() => {
+        setNotfarc(false);
+      }, 2500);
+
     }
   }
 
@@ -169,7 +170,7 @@ export default function Home() {
   return (
     <div>
       <Notifications notfOpen={notfOpen} />
-      <Pinnotifications notfpin={notfpin} />
+      <ArchiveNotification notfarc={notfarc} />
       <Labelnotifications notLab={notLab} />
       <LabelsModal openPopup={labelPopup} closePopup={() => setLabelPopup(false)}>
         <div className="p-4">

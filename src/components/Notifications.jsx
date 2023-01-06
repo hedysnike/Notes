@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 export function Notifications({ notfOpen }) {
   if (!open) return null;
 
@@ -10,12 +8,12 @@ export function Notifications({ notfOpen }) {
   );
 }
 
-export function Pinnotifications({ notfpin }) {
+export function ArchiveNotification({ notfarc }) {
   if (!open) return null;
 
   return (
-    <div className={`z-50 p-4 bottom-5 left-6 w-72 absolute text-white bg-[#313235] ${notfpin ? "" : "hidden"}`}>
-      Note Pinned
+    <div className={`z-50 p-4 bottom-5 left-6 w-72 absolute text-white bg-[#313235] ${notfarc ? "" : "hidden"}`}>
+      Note Archived
     </div>
   );
 }
