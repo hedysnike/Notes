@@ -167,6 +167,9 @@ export default function Home() {
     setLabeltext("");
   }
 
+
+  console.log(items)
+
   return (
     <div>
       <Notifications notfOpen={notfOpen} />
