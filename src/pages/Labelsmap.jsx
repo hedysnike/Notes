@@ -2,7 +2,6 @@ import Sidebar from "./Sidebar";
 import { useLabels } from "../useLabels";
 import { useItems } from "../useItems";
 import { useState } from "react";
-import Modal from "../components/Modal";
 import { Icon } from "@iconify/react";
 import { useParams } from "react-router-dom";
 import LabelsModal from "../components/LabelsModal";
