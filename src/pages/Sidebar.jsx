@@ -17,6 +17,7 @@ export default function Sidebar({ setLabelPopup }) {
         </Link>
         {labels?.map((l) => (
           <div key={l.id}>
+            <Link to={`/labels/${l.id}`}>
             <Icon
               className="my-3 "
               icon="material-symbols:label-outline"
@@ -25,7 +26,8 @@ export default function Sidebar({ setLabelPopup }) {
               height="25"
               cursor="pointer"
             />
-          </div>
+            </Link>
+            </div>
         ))}
         <Icon
           className="my-3"

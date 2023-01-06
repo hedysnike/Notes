@@ -3,7 +3,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useItems } from "../useItems";
-import Label from "./Label";
+import Label from "./LabelPopover";
 
 export function ArchiveItem(props) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
