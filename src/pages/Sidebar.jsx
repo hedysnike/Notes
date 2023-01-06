@@ -39,7 +39,7 @@ export default function Sidebar({ setLabelPopup }) {
           }}
           cursor="pointer"
         />
-        <Link to="./archive">
+        <Link to="/archive">
           <Icon className="my-3" icon="material-symbols:archive-outline" color="white" width="25" height="25" />
         </Link>
       </div>

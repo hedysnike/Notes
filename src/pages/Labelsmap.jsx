@@ -20,7 +20,7 @@ export default function Labelsmap() {
 
   const { id } = useParams();
 
-  const foundLabel = labels.filter(label => label.id === id)[0];
+  const filteredLabel = labels.filter(label => label.id === id)[0];
 
 
   const filteredItems = items.filter(item =>
@@ -239,7 +239,7 @@ export default function Labelsmap() {
             </div>
           </Modal> */}
         </div>
-        <div className="flex justify-center text-2xl text-white">{foundLabel.name}</div>
+        <div className="flex justify-center text-2xl text-white mb-10 mt-10">{filteredLabel.name}</div>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
           {filteredItems.map((i) => (
             <Item {...i} key={i.id} onComplete={() => deleteItem(i.id)} />
