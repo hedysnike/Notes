@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Archive from "./pages/Archive";
-import Labelsmap from "./pages/LabelsMap";
+import Labelsmap from "./pages/Labelsmap";
 
 function App() {
   return (
