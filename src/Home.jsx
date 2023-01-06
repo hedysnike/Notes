@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import "./index.css";
-import { Link } from "react-router-dom";
 import { DndContext, useSensor, useSensors, PointerSensor, closestCenter } from "@dnd-kit/core";
 import { SortableContext, arrayMove, rectSortingStrategy } from "@dnd-kit/sortable";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
@@ -11,6 +10,7 @@ import { Item } from "./components/Item";
 import Modal from "./components/Modal";
 import { useLabels } from "./useLabels";
 import { useItems } from "./useItems";
+import Sidebar from "./pages/Sidebar";
 
 export default function Home() {
   const { items, setItems } = useItems();
@@ -267,38 +267,7 @@ export default function Home() {
         </div>
       </LabelsModal>
       <div className="bg-black min-h-screen h-auto flex w-full overflow-hidden">
-        <div className="bg-[#100F0F] h-full fixed w-[5%] text-white ]">
-          <div className="flex flex-col items-center">
-            <div className="mb-16"></div>
-            <Icon className="my-3" icon="ph:notebook-light" color="white" width="25" height="25" />
-            {labels?.map((l) => (
-              <div key={l.id}>
-                <Icon
-                  className="my-3 "
-                  icon="material-symbols:label-outline"
-                  color="white"
-                  width="25"
-                  height="25"
-                  cursor="pointer"
-                />
-              </div>
-            ))}
-            <Icon
-              className="my-3"
-              icon="mdi:pencil-outline"
-              color="white"
-              width="25"
-              height="25"
-              onClick={() => {
-                setLabelPopup(true);
-              }}
-              cursor="pointer"
-            />
-            <Link to="./archive">
-              <Icon className="my-3" icon="material-symbols:archive-outline" color="white" width="25" height="25" />
-            </Link>
-          </div>
-        </div>
+        <Sidebar setLabelPopup={setLabelPopup} />
         <div className="h-full w-[5%]"></div>
         {/* Sidebar Above Content Below */}
         <div className="flex-none w-[95%]">
@@ -357,7 +326,6 @@ function Items({
   deleteItem,
   togglePinned,
   pinned,
-  archive,
   toggleArchived,
 }) {
   const [openModal, setOpenModal] = useState(false);

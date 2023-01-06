@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useItems } from "../useItems";
 import Label from "./Label";
 
-export function Item(props) {
+export function ArchiveItem(props) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
   const [hovered, setHovered] = useState(false);
   const { setItems } = useItems();
@@ -46,15 +46,6 @@ export function Item(props) {
           </div>
         ))}
       </div>
-      <Icon
-        onClick={props.onToggle}
-        icon="ic:outline-push-pin"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute top-2 right-3`}
-        cursor="pointer"
-      />
       <Icon
         onClick={props.onComplete}
         icon="mdi:trash-can-outline"
