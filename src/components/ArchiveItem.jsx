@@ -60,11 +60,11 @@ export function ArchiveItem(props) {
           checked={props?.labels?.map?.((l) => l.id)}
           onCheckedChange={(c, l) => {
             setItems((prev) => {
-              const item = prev.find((z) => z.id === props.id);
+              const ArchiveItem = prev.find((z) => z.id === props.id);
               if (c) {
-                item.labels.push(l);
+                ArchiveItem.labels.push(l);
               } else {
-                item.labels = item.labels.filter((z) => z !== l);
+                ArchiveItem.labels = ArchiveItem.labels.filter((z) => z !== l);
               }
               return [...prev];
             });

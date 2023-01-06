@@ -11,9 +11,9 @@ export default function Archive({ toggleArchived, deleteItem, updatedescription,
   const { items } = useItems();
 
   return (
-     <div className="bg-black min-h-screen h-auto flex w-full overflow-hidden">
-        <Sidebar setLabelPopup={setLabelPopup} />
-        <div className="h-full w-[5%]"></div>
+    <div className="bg-black min-h-screen h-auto flex w-full overflow-hidden">
+      <Sidebar setLabelPopup={setLabelPopup} />
+      <div className="h-full w-[5%]"></div>
       <div className="flex-none w-[95%]">
         <div>
           <Modal open={openModal} onClose={() => setOpenModal(false)}>
@@ -93,22 +93,23 @@ export default function Archive({ toggleArchived, deleteItem, updatedescription,
             </div>
           </Modal>
         </div>
-        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16">
-          {items.map((a) => (
-            <ArchiveItem
-              id={a.id}
-              key={a.id}
-              title={a.title}
-              description={a.description}
-              onClick={() => {
-                setOpenModal(true);
-                setActiveItem(a);
-              }}
-              onComplete={() => deleteItem(a.id)}
-              archive={a.archive}
-              onArchive={() => toggleArchived(a)}
-            />
-          ))}
+        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16 mt-52">
+          {items
+            .map((a) => (
+              <ArchiveItem
+                id={a.id}
+                key={a.id}
+                title={a.title}
+                description={a.description}
+                onClick={() => {
+                  setOpenModal(true);
+                  setActiveItem(a);
+                }}
+                onComplete={() => deleteItem(a.id)}
+                archive={a.archive}
+                onArchive={() => toggleArchived(a)}
+              />
+            ))}
         </div>
       </div>
     </div>

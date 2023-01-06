@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import "./index.css";
+import "../index.css";
 import { DndContext, useSensor, useSensors, PointerSensor, closestCenter } from "@dnd-kit/core";
 import { SortableContext, arrayMove, rectSortingStrategy } from "@dnd-kit/sortable";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
 import { Icon } from "@iconify/react";
-import { Notifications, Labelnotifications, Pinnotifications } from "./components/Notifications";
-import LabelsModal from "./components/LabelsModal";
-import { Item } from "./components/Item";
-import Modal from "./components/Modal";
-import { useLabels } from "./useLabels";
-import { useItems } from "./useItems";
-import Sidebar from "./pages/Sidebar";
+import { Notifications, Labelnotifications, Pinnotifications } from "../components/Notifications";
+import LabelsModal from "../components/LabelsModal";
+import { Item } from "../components/Item";
+import Modal from "../components/Modal";
+import { useLabels } from "../useLabels";
+import { useItems } from "../useItems";
+import Sidebar from "./Sidebar";
 
 export default function Home() {
   const { items, setItems } = useItems();
@@ -326,6 +326,7 @@ function Items({
   deleteItem,
   togglePinned,
   pinned,
+  archive,
   toggleArchived,
 }) {
   const [openModal, setOpenModal] = useState(false);
@@ -443,7 +444,7 @@ function Items({
         </div>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
           {items
-            .filter((item) => !pinned.includes(item))
+            .filter((item) => !pinned.includes(item) && !archive.includes(item))
             .map((i) => (
               <Item
                 {...i}

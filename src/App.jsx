@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./Home";
+import Home from "./pages/Home";
 import Archive from "./pages/Archive";
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Home />} />
-        <Route path="archive"  element={<Archive />}/>
+        <Route path="archive" element={<Archive />} />
       </Routes>
     </BrowserRouter>
   );
