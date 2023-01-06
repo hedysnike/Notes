@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useParams } from "react-router-dom";
 import LabelsModal from "../components/LabelsModal";
-import { Item } from "../components/item";
+import { Item } from "../components/Item";
 
 export default function Labelsmap() {
   const [labelEdit, setLabelEdit] = useState(false);
