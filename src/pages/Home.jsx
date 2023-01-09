@@ -405,15 +405,7 @@ function Items({
               cursor="pointer"
             />
             <Icon
-              icon="material-symbols:image"
-              color="white"
-              width="24"
-              height="20"
-              className="absolute bottom-2 left-[68px]"
-              cursor="pointer"
-            />
-            <Icon
-              icon="mdi:format-list-checkbox"
+              icon="material-symbols:label-outline-sharp"
               color="white"
               width="24"
               height="20"
@@ -421,19 +413,11 @@ function Items({
               cursor="pointer"
             />
             <Icon
-              icon="material-symbols:label-outline-sharp"
-              color="white"
-              width="24"
-              height="20"
-              className="absolute bottom-2 left-[152px]"
-              cursor="pointer"
-            />
-            <Icon
               icon="material-symbols:archive-outline"
               color="white"
               width="24"
               height="20"
-              className="absolute bottom-2 left-[124px]"
+              className="absolute bottom-2 left-[68px]"
               cursor="pointer"
             />
           </div>

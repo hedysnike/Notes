@@ -86,10 +86,10 @@ export function Item(props) {
         color="white"
         width="22"
         height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-10 left-[68px]`}
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[68px]`}
         cursor="pointer"
       />
-      <div className={`absolute bottom-2 left-10`}>
+      <div className={`${hovered ? "" : "hidden"} absolute bottom-2 left-10`}>
       <ColorBlock
         onColorChange={(color) => {
           setItems((prev) => {
@@ -107,7 +107,7 @@ export function Item(props) {
         color="white"
         width="22"
         height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[96px]`}
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[68px]`}
         cursor="pointer"
       />
       <Icon
@@ -116,7 +116,7 @@ export function Item(props) {
         color="white"
         width="22"
         height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[124px]`}
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[96px]`}
         cursor="pointer"
       />
     </div>
