@@ -35,7 +35,7 @@ function ColorBlock({ onColorChange }) {
             <div className="p-1 flex mx-3 pb-3 gap-1 outline-none">
               <div
                 onClick={() => onColorChange(color2)}
-                className="p-1 border border-solid border-[#ffffff] rounded-full"
+                className="p-1 border border-solid  border-[#ffffffbd] rounded-full"
               >
                 <Icon icon="mdi:image-off" color="white" width="white" height="17" cursor="pointer" />
               </div>
