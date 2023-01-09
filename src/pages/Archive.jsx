@@ -5,7 +5,7 @@ import { useState } from "react";
 import Modal from "../components/Modal";
 import { Icon } from "@iconify/react";
 
-export default function Archive({ toggleArchived, deleteItem, updatedescription, updateTitle, setLabelPopup }) {
+export default function Archive({ toggleArchived, deleteItem, updatedescription, updateTitle, setLabelPopup, archive }) {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState();
   const { items } = useItems();
@@ -95,8 +95,7 @@ export default function Archive({ toggleArchived, deleteItem, updatedescription,
         </div>
         <div className="flex justify-center text-white mt-10 text-4xl">Archived</div>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16 mt-24">
-          {items
-            .map((a) => (
+          {archive?.map((a) => (
               <ArchiveItem
                 id={a.id}
                 key={a.id}

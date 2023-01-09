@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useItems } from "../useItems";
 import Label from "./LabelPopover";
+import ColorBlock from "./Colors";
 
 export function Item(props) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
@@ -19,7 +20,7 @@ export function Item(props) {
   return (
     <div
       ref={setNodeRef}
-      className="bg-[#100F0F] hover:bg-[#1b1919] text-white m-3 rounded-xl relative hover:shadow-md hover:shadow-[#1b1919] overflow-hidden max-h-96"
+      className={`${props.color} hover:brightness-125 text-white m-3 rounded-xl relative hover:shadow-md hover:shadow-[#1b1919] overflow-hidden max-h-96`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() =>
         setTimeout(() => {
@@ -81,21 +82,26 @@ export function Item(props) {
         />
       </div>
       <Icon
-        icon="mdi:paint-outline"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-10`}
-        cursor="pointer"
-      />
-      <Icon
         icon="material-symbols:image"
         color="white"
         width="22"
         height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[68px]`}
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-10 left-[68px]`}
         cursor="pointer"
       />
+      <div className={`absolute bottom-2 left-10`}>
+      <ColorBlock
+        onColorChange={(color) => {
+          setItems((prev) => {
+            const item = prev.find((z) => z.id === props.id);
+
+            item.color = color;
+
+            return [...prev];
+          });
+        }}
+      />
+      </div>
       <Icon
         icon="mdi:format-list-checkbox"
         color="white"

@@ -9,6 +9,7 @@ export const useItems = () => useContext(itemsContext);
 
 export const useItemsProvider = () => {
   const [items, setItems] = useState([]);
+  const [archived, setArchived] = useState([]);
 
   useEffect(() => {
     setItems(JSON.parse(localStorage.getItem("items")) || []);

@@ -82,6 +82,7 @@ export default function Home() {
         title: currentItemTitle,
         description: currentItemValue,
         labels: [],
+        color: "bg-[#100F0F]",
       },
       ...items,
     ]);
@@ -121,6 +122,14 @@ export default function Home() {
   }
 
   function toggleArchived(i) {
+    setItems((prev) => {
+      const item = prev.find((p) => p.id === i);
+
+      item.archived = true;
+
+      return [...prev];
+    });
+
     if (archive.includes(i)) {
       setArchive(archive.filter((p) => p !== i));
     } else {
@@ -129,7 +138,6 @@ export default function Home() {
       setTimeout(() => {
         setNotfarc(false);
       }, 2500);
-
     }
   }
 
@@ -167,8 +175,7 @@ export default function Home() {
     setLabeltext("");
   }
 
-
-  console.log(items)
+  console.log(items);
 
   return (
     <div>
