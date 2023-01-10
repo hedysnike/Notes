@@ -81,14 +81,6 @@ export function Item(props) {
           }}
         />
       </div>
-      <Icon
-        icon="material-symbols:image"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[68px]`}
-        cursor="pointer"
-      />
       <div className={`${hovered ? "" : "hidden"} absolute bottom-2 left-10`}>
       <ColorBlock
         onColorChange={(color) => {
@@ -103,20 +95,12 @@ export function Item(props) {
       />
       </div>
       <Icon
-        icon="mdi:format-list-checkbox"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[68px]`}
-        cursor="pointer"
-      />
-      <Icon
         onClick={props.onArchive}
         icon="material-symbols:archive-outline"
         color="white"
         width="22"
         height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[96px]`}
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[68px]`}
         cursor="pointer"
       />
     </div>

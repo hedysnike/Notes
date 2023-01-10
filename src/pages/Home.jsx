@@ -11,6 +11,9 @@ import Modal from "../components/Modal";
 import { useLabels } from "../useLabels";
 import { useItems } from "../useItems";
 import Sidebar from "./Sidebar";
+  import Label from "../components/LabelPopover";
+import ColorBlock from "../components/Colors";
+
 
 export default function Home() {
   const { items, setItems } = useItems();
@@ -74,6 +77,8 @@ export default function Home() {
   function hideInputField() {
     setMakeVisible(false);
   }
+
+  console.log(items)
 
   function addItem() {
     setItems([
@@ -342,6 +347,8 @@ function Items({
 }) {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState();
+  const { labels } = useLabels();
+
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
   function handleDragEnd(event) {
@@ -388,38 +395,45 @@ function Items({
               className="absolute bottom-2 right-3"
               cursor="pointer"
             />
-            <Icon
-              icon="material-symbols:bookmark-outline"
-              color="white"
-              width="24"
-              height="20"
-              className="absolute bottom-2 left-3"
-              cursor="pointer"
-            />
-            <Icon
-              icon="mdi:paint-outline"
-              color="white"
-              width="24"
-              height="20"
-              className="absolute bottom-2 left-10"
-              cursor="pointer"
-            />
-            <Icon
-              icon="material-symbols:label-outline-sharp"
-              color="white"
-              width="24"
-              height="20"
-              className="absolute bottom-2 left-[96px]"
-              cursor="pointer"
-            />
+            <div className="absolute bottom-2 left-3 cursor-pointer">
+            <Label 
+                      checked={labels?.map?.((l) => l.id)}
+                      onCheckedChange={(c, l) => {
+                        setItems((prev) => {
+                          const item = prev.find((z) => z.id === id);
+                          if (c) {
+                            item.labels.push(l);
+                          } else {
+                            item.labels = item.labels.filter((z) => z !== l);
+                          }
+                          return [...prev];
+                        });
+                      }}
+                    />
+            
+            </div>
+            <div className="absolute bottom-2 left-10 cursor-pointer">
+            <ColorBlock
+        onColorChange={(color) => {
+          setItems((prev) => {
+            const item = prev.find((z) => z.id === id);
+
+            item.color = color;
+
+            return [...prev];
+          });
+        }}
+      />
+            </div>
+            <div className="absolute bottom-2 left-[68px]">
             <Icon
               icon="material-symbols:archive-outline"
               color="white"
               width="24"
               height="20"
-              className="absolute bottom-2 left-[68px]"
               cursor="pointer"
             />
+            </div>
           </div>
         </Modal>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16">
