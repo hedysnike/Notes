@@ -1,14 +1,33 @@
-import Sidebar from "./Sidebar";
-import { ArchiveItem } from "../components/ArchiveItem";
+import Sidebar from "../pages/Sidebar";
+import { ArchiveItem } from "./ArchiveItem";
 import { useItems } from "../useItems";
 import { useState } from "react";
-import Modal from "../components/Modal";
+import Modal from "./Modal";
 import { Icon } from "@iconify/react";
 
-export default function Archive({ toggleArchived, deleteItem, updatedescription, updateTitle, setLabelPopup, archive }) {
+
+
+export default function Archive({ updatedescription, updateTitle, setLabelPopup }) {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState();
-  const { items } = useItems();
+  const { items, setItems } = useItems();
+
+
+  function toggleArchived(i) {
+    setItems((prev) => {
+      const item = prev.find((p) => p.id === i);
+      if (item) {
+        item.archived = !item.archived;
+      }
+      return [...prev];
+    });
+  }
+
+  function deleteItem(id) {
+    setItems((prev) => prev.filter((p) => p.id !== id));
+  }
+
+
 
   return (
     <div className="bg-black min-h-screen h-auto flex w-full overflow-hidden">
@@ -39,15 +58,14 @@ export default function Archive({ toggleArchived, deleteItem, updatedescription,
                 color="white"
                 width="24"
                 height="20"
-                className="absolute bottom-2 right-3"
-                cursor="pointer"
+                className="absolute bottom-2 right-3 cursor-pointer"
               />
               <Icon
                 icon="material-symbols:bookmark-outline"
                 color="white"
                 width="24"
                 height="20"
-                className="absolute bottom-2 left-3"
+                className="absolute bottom-2 left-3 cursor-pointer"
                 cursor="pointer"
               />
               <Icon
@@ -55,7 +73,7 @@ export default function Archive({ toggleArchived, deleteItem, updatedescription,
                 color="white"
                 width="24"
                 height="20"
-                className="absolute bottom-2 left-10"
+                className="absolute bottom-2 left-10 cursor-pointer"
                 cursor="pointer"
               />
               <Icon
@@ -95,7 +113,9 @@ export default function Archive({ toggleArchived, deleteItem, updatedescription,
         </div>
         <div className="flex justify-center text-white mt-10 text-4xl">Archived</div>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16 mt-24">
-          {archive?.map((a) => (
+          {items
+            .filter((i) => i.archived && !i.pinned)
+            ?.map((a) => (
               <ArchiveItem
                 id={a.id}
                 key={a.id}
@@ -107,7 +127,8 @@ export default function Archive({ toggleArchived, deleteItem, updatedescription,
                 }}
                 onComplete={() => deleteItem(a.id)}
                 archive={a.archive}
-                onArchive={() => toggleArchived(a)}
+                onArchive={() => toggleArchived(a.id)}
+                labels={a.labels}
               />
             ))}
         </div>

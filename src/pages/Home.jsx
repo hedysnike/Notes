@@ -11,9 +11,6 @@ import Modal from "../components/Modal";
 import { useLabels } from "../useLabels";
 import { useItems } from "../useItems";
 import Sidebar from "./Sidebar";
-  import Label from "../components/LabelPopover";
-import ColorBlock from "../components/Colors";
-
 
 export default function Home() {
   const { items, setItems } = useItems();
@@ -78,7 +75,7 @@ export default function Home() {
     setMakeVisible(false);
   }
 
-  console.log(items)
+  console.log(items);
 
   function addItem() {
     setItems([
@@ -129,8 +126,13 @@ export default function Home() {
   function toggleArchived(i) {
     setItems((prev) => {
       const item = prev.find((p) => p.id === i);
-
-      item.archived = true;
+      if (item) {
+        item.archived = !item.archived;
+      }
+      setNotfarc(true);
+      setTimeout(() => {
+        setNotfarc(false);
+      }, 2500);
 
       return [...prev];
     });
@@ -139,10 +141,6 @@ export default function Home() {
       setArchive(archive.filter((p) => p !== i));
     } else {
       setArchive([...archive, i]);
-      setNotfarc(true);
-      setTimeout(() => {
-        setNotfarc(false);
-      }, 2500);
     }
   }
 
@@ -342,12 +340,10 @@ function Items({
   deleteItem,
   togglePinned,
   pinned,
-  archive,
   toggleArchived,
 }) {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState();
-  const { labels } = useLabels();
 
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
@@ -387,53 +383,6 @@ function Items({
             {activeItem?.description}
           </div>
           <div>
-            <Icon
-              icon="mdi:trash-can-outline"
-              color="white"
-              width="24"
-              height="20"
-              className="absolute bottom-2 right-3"
-              cursor="pointer"
-            />
-            <div className="absolute bottom-2 left-3 cursor-pointer">
-            <Label 
-                      checked={labels?.map?.((l) => l.id)}
-                      onCheckedChange={(c, l) => {
-                        setItems((prev) => {
-                          const item = prev.find((z) => z.id === id);
-                          if (c) {
-                            item.labels.push(l);
-                          } else {
-                            item.labels = item.labels.filter((z) => z !== l);
-                          }
-                          return [...prev];
-                        });
-                      }}
-                    />
-            
-            </div>
-            <div className="absolute bottom-2 left-10 cursor-pointer">
-            <ColorBlock
-        onColorChange={(color) => {
-          setItems((prev) => {
-            const item = prev.find((z) => z.id === id);
-
-            item.color = color;
-
-            return [...prev];
-          });
-        }}
-      />
-            </div>
-            <div className="absolute bottom-2 left-[68px]">
-            <Icon
-              icon="material-symbols:archive-outline"
-              color="white"
-              width="24"
-              height="20"
-              cursor="pointer"
-            />
-            </div>
           </div>
         </Modal>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16">
@@ -453,7 +402,14 @@ function Items({
         </div>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
           {items
-            .filter((item) => !pinned.includes(item) && !archive.includes(item))
+            .filter((item) => {
+              if (item.archived) {
+                return false;
+              } else if (item.pinned) {
+                return false;
+              }
+              return true;
+            })
             .map((i) => (
               <Item
                 {...i}
@@ -465,7 +421,7 @@ function Items({
                 }}
                 onComplete={() => deleteItem(i.id)}
                 onToggle={() => togglePinned(i)}
-                onArchive={() => toggleArchived(i)}
+                onArchive={() => toggleArchived(i.id)}
               />
             ))}
         </div>

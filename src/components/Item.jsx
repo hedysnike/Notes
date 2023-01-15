@@ -53,8 +53,7 @@ export function Item(props) {
         color="white"
         width="22"
         height="20"
-        className={`${hovered ? "" : "hidden"} absolute top-2 right-3`}
-        cursor="pointer"
+        className={`${hovered ? "" : "hidden"} absolute top-2 right-3 cursor-pointer`}
       />
       <Icon
         onClick={props.onComplete}
@@ -62,8 +61,7 @@ export function Item(props) {
         color="white"
         width="22"
         height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
-        cursor="pointer"
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3 cursor-pointer`}
       />
       <div className="absolute bottom-2 left-3">
         <Label

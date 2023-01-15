@@ -1,24 +1,15 @@
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useItems } from "../useItems";
 import Label from "./LabelPopover";
+import ColorBlock from "./Colors";
 
 export function ArchiveItem(props) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
   const [hovered, setHovered] = useState(false);
   const { setItems } = useItems();
 
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    zIndex: hovered ? 10 : 0,
-  };
-
   return (
     <div
-      ref={setNodeRef}
       className="bg-[#100F0F] hover:bg-[#1b1919] text-white m-3 rounded-xl relative hover:shadow-md hover:shadow-[#1b1919] overflow-hidden max-h-96"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() =>
@@ -26,9 +17,6 @@ export function ArchiveItem(props) {
           setHovered(false);
         }, 150)
       }
-      style={style}
-      {...attributes}
-      {...listeners}
     >
       <div className="p-3 pb-2 text-zinc-300 whitespace-pre-wrap text-sm" onClick={props.onClick}>
         <div className="text-base text-white mb-2">
@@ -52,10 +40,9 @@ export function ArchiveItem(props) {
         color="white"
         width="22"
         height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3`}
-        cursor="pointer"
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 right-3 cursor-pointer`}
       />
-      <div className="absolute bottom-2 left-3">
+      <div className="absolute bottom-2 left-3 cursor-pointer">
         <Label
           checked={props?.labels?.map?.((l) => l.id)}
           onCheckedChange={(c, l) => {
@@ -71,38 +58,26 @@ export function ArchiveItem(props) {
           }}
         />
       </div>
-      <Icon
-        icon="mdi:paint-outline"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-10`}
-        cursor="pointer"
-      />
-      <Icon
-        icon="material-symbols:image"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[68px]`}
-        cursor="pointer"
-      />
-      <Icon
-        icon="mdi:format-list-checkbox"
-        color="white"
-        width="22"
-        height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[96px]`}
-        cursor="pointer"
-      />
+      <div className={`${hovered ? "" : "hidden"} absolute bottom-2 left-10 cursor-pointer`}>
+        <ColorBlock
+          onColorChange={(color) => {
+            setItems((prev) => {
+              const item = prev.find((z) => z.id === props.id);
+
+              item.color = color;
+
+              return [...prev];
+            });
+          }}
+        />
+      </div>
       <Icon
         onClick={props.onArchive}
         icon="ic:outline-unarchive"
         color="white"
         width="22"
         height="20"
-        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[124px]`}
-        cursor="pointer"
+        className={`${hovered ? "" : "hidden"} absolute bottom-2 left-[68px] cursor-pointer`}
       />
     </div>
   );
