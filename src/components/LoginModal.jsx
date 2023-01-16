@@ -2,11 +2,11 @@ import React from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 
-export default function MyModal({ open, onClose, children }) {
+export default function LoginModal({ modaLogin, CloseLogin, children }) {
   return (
-    <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onClose}>
-        <Transition.Child
+    <Transition appear show={modaLogin} as={Fragment}>
+    <Dialog as="div" className="relative z-10" onClose={CloseLogin}>
+    <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -17,6 +17,7 @@ export default function MyModal({ open, onClose, children }) {
         >
           <div className="fixed inset-0 bg-black bg-opacity-25" />
         </Transition.Child>
+
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4 text-center">
             <Transition.Child 

@@ -20,7 +20,7 @@ export function Item(props) {
   return (
     <div
       ref={setNodeRef}
-      className={`${props.color} hover:brightness-125 text-white m-3 rounded-xl relative hover:shadow-md hover:shadow-[#1b1919] overflow-hidden max-h-96`}
+      className={`${props.color} hover:brightness-125 text-white m-3 rounded-xl relative hover:shadow-lg hover:shadow-[#0f0f0f] overflow-hidden max-h-96`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() =>
         setTimeout(() => {

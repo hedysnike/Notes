@@ -11,6 +11,7 @@ import Modal from "../components/Modal";
 import { useLabels } from "../useLabels";
 import { useItems } from "../useItems";
 import Sidebar from "./Sidebar";
+import Register from "../components/register";
 
 export default function Home() {
   const { items, setItems } = useItems();
@@ -182,6 +183,7 @@ export default function Home() {
 
   return (
     <div>
+      <Register /> 
       <Notifications notfOpen={notfOpen} />
       <ArchiveNotification notfarc={notfarc} />
       <Labelnotifications notLab={notLab} />
