@@ -1,5 +1,5 @@
 export const login = async (username, password) => {
-  const response = await fetch("http://localhost:3000/login", {
+  const response = await fetch("https://notes-production-a0ef.up.railway.app/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -14,7 +14,7 @@ export const login = async (username, password) => {
 };
 
 export const register = async (username, password) => {
-  const response = await fetch("http://localhost:3000/register", {
+  const response = await fetch("https://notes-production-a0ef.up.railway.app/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -29,7 +29,7 @@ export const register = async (username, password) => {
 };
 
 export const createNote = async (note, token) => {
-  const response = await fetch("http://localhost:3000/notes", {
+  const response = await fetch("https://notes-production-a0ef.up.railway.app/notes", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export const createNote = async (note, token) => {
 };
 
 export const getMe = async (token) => {
-  const response = await fetch("http://localhost:3000/me", {
+  const response = await fetch("https://notes-production-a0ef.up.railway.app/me", {
     headers: {
       Authorization: token,
     },
@@ -52,7 +52,7 @@ export const getMe = async (token) => {
 };
 
 export const getNotes = async (token) => {
-  const response = await fetch("http://localhost:3000/notes", {
+  const response = await fetch("https://notes-production-a0ef.up.railway.app/notes", {
     headers: {
       Authorization: token,
     },
