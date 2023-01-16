@@ -1,12 +1,14 @@
 import React from "react";
 import { useState } from "react";
+import { useProfile } from "../profilecontext";
 import RegisterModal from "./RegisterModal";
-import { login, register } from "./api";
 
 export default function Register() {
   const [modalOpen, setModalOpen] = useState(false);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+
+  const { login, register } = useProfile();
 
   return (
     <div>

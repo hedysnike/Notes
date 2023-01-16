@@ -12,8 +12,10 @@ import { useLabels } from "../useLabels";
 import { useItems } from "../useItems";
 import Sidebar from "./Sidebar";
 import Register from "../components/register";
+import { useProfile } from "../profilecontext";
 
 export default function Home() {
+  const { isLoggedIn, profile } = useProfile();
   const { items, setItems } = useItems();
   const [currentItemValue, setCurrentItemValue] = useState("");
   const [currentItemTitle, setCurrentItemTitle] = useState("");
@@ -183,7 +185,7 @@ export default function Home() {
 
   return (
     <div>
-      <Register /> 
+      {!isLoggedIn ? <Register /> : <div className="absolute right-6 top-4 text-white">{profile.username}</div>}
       <Notifications notfOpen={notfOpen} />
       <ArchiveNotification notfarc={notfarc} />
       <Labelnotifications notLab={notLab} />
@@ -334,19 +336,9 @@ export default function Home() {
   );
 }
 
-function Items({
-  items,
-  setItems,
-  updatedescription,
-  updateTitle,
-  deleteItem,
-  togglePinned,
-  pinned,
-  toggleArchived,
-}) {
+function Items({ items, setItems, updatedescription, updateTitle, deleteItem, togglePinned, pinned, toggleArchived }) {
   const [openModal, setOpenModal] = useState(false);
   const [activeItem, setActiveItem] = useState();
-
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
   function handleDragEnd(event) {
@@ -383,8 +375,6 @@ function Items({
             onInput={(e) => updatedescription(activeItem.id, e.target.innerText)}
           >
             {activeItem?.description}
-          </div>
-          <div>
           </div>
         </Modal>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16">
