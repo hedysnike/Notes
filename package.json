@@ -16,7 +16,6 @@
     "@mui/base": "5.0.0-alpha.112",
     "@radix-ui/react-checkbox": "^1.0.1",
     "@radix-ui/react-popover": "^1.0.2",
-    "@supabase/supabase-js": "^2.2.3",
     "nanoid": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

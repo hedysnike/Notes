@@ -79,7 +79,7 @@ export function Item(props) {
           }}
         />
       </div>
-      <div className={`${hovered ? "" : "hidden"} absolute bottom-2 left-10`}>
+      <div className=" absolute bottom-2 left-10">
       <ColorBlock
         onColorChange={(color) => {
           setItems((prev) => {
