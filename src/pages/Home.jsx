@@ -11,11 +11,9 @@ import Modal from "../components/Modal";
 import { useLabels } from "../useLabels";
 import { useItems } from "../useItems";
 import Sidebar from "./Sidebar";
-import Register from "../components/register";
-import { useProfile } from "../profilecontext";
+import { PinnedItem } from "../components/pinneditem";
 
 export default function Home() {
-  const { isLoggedIn, profile } = useProfile();
   const { items, setItems } = useItems();
   const [currentItemValue, setCurrentItemValue] = useState("");
   const [currentItemTitle, setCurrentItemTitle] = useState("");
@@ -185,7 +183,6 @@ export default function Home() {
 
   return (
     <div>
-      {!isLoggedIn ? <Register /> : <div className="absolute right-6 top-4 text-white">{profile.username}</div>}
       <Notifications notfOpen={notfOpen} />
       <ArchiveNotification notfarc={notfarc} />
       <Labelnotifications notLab={notLab} />
@@ -379,7 +376,7 @@ function Items({ items, setItems, updatedescription, updateTitle, deleteItem, to
         </Modal>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16">
           {pinned.map((b) => (
-            <Item
+            <PinnedItem
               {...b}
               key={b.id}
               onClick={() => {
