@@ -1,5 +1,3 @@
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { useItems } from "../useItems";
@@ -20,7 +18,6 @@ export function PinnedItem(props) {
           setHovered(false);
         }, 150)
       }
-      style={style}
     >
       <div className="p-3 pb-2 text-zinc-300 whitespace-pre-wrap text-sm">
         <div className="text-base text-white mb-2">
