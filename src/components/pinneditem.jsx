@@ -7,19 +7,12 @@ import Label from "./LabelPopover";
 import ColorBlock from "./Colors";
 
 export function PinnedItem(props) {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: props.id });
-  const [hovered, setHovered] = useState(false);
+  const [ hovered, setHovered ] = useState(false);
   const { setItems } = useItems();
 
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    zIndex: hovered ? 10 : 0,
-  };
 
   return (
     <div
-      ref={setNodeRef}
       className={`${props.color} hover:brightness-125 text-white m-3 rounded-xl relative hover:shadow-lg hover:shadow-[#0f0f0f] overflow-hidden max-h-96`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() =>
@@ -28,8 +21,6 @@ export function PinnedItem(props) {
         }, 150)
       }
       style={style}
-      {...attributes}
-      {...listeners}
     >
       <div className="p-3 pb-2 text-zinc-300 whitespace-pre-wrap text-sm">
         <div className="text-base text-white mb-2">
