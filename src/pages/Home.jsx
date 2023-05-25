@@ -14,11 +14,10 @@ import Sidebar from "./Sidebar";
 import { PinnedItem } from "../components/pinneditem";
 
 export default function Home() {
-  const { items, setItems } = useItems();
+  const { items, setItems, pinned, setPinned } = useItems();
   const [currentItemValue, setCurrentItemValue] = useState("");
   const [currentItemTitle, setCurrentItemTitle] = useState("");
   const [makeVisible, setMakeVisible] = useState(false);
-  const [pinned, setPinned] = useState([]);
   const [notfOpen, setNotfOpen] = useState(false);
   const [notfarc, setNotfarc] = useState(false);
   const [labelPopup, setLabelPopup] = useState(false);
@@ -76,7 +75,6 @@ export default function Home() {
     setMakeVisible(false);
   }
 
-  console.log(items);
 
   function addItem() {
     setItems([
@@ -86,6 +84,7 @@ export default function Home() {
         description: currentItemValue,
         labels: [],
         color: "bg-[#100F0F]",
+        pinned: false,
       },
       ...items,
     ]);
@@ -117,11 +116,15 @@ export default function Home() {
   }
 
   function togglePinned(i) {
-    if (pinned.includes(i)) {
-      setPinned(pinned.filter((p) => p !== i));
-    } else {
-      setPinned([...pinned, i]);
-    }
+    setItems((prev) => {
+      return prev.map(item => {
+        if (item.id === i) {
+          return { ...item, pinned: !item.pinned };
+        } else {
+          return item;
+        }
+      });
+    });
   }
 
   function toggleArchived(i) {
@@ -179,7 +182,6 @@ export default function Home() {
     setLabeltext("");
   }
 
-  console.log(items);
 
   return (
     <div>
@@ -375,45 +377,40 @@ function Items({ items, setItems, updatedescription, updateTitle, deleteItem, to
           </div>
         </Modal>
         <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16">
-          {pinned.map((b) => (
-            <PinnedItem
-              {...b}
-              key={b.id}
-              onClick={() => {
-                setOpenModal(true);
-                setActiveItem(b.id);
-              }}
-              onComplete={() => deleteItem(b.id)}
-              onToggle={() => togglePinned(b)}
-              pinned={b.pinned}
-            />
-          ))}
-        </div>
-        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
-          {items
-            .filter((item) => {
-              if (item.archived) {
-                return false;
-              } else if (item.pinned) {
-                return false;
-              }
-              return true;
-            })
-            .map((i) => (
-              <Item
-                {...i}
-                key={i.id}
-                onClick={() => {
-                  console.log("clicked", i);
-                  setOpenModal(true);
-                  setActiveItem(i);
-                }}
-                onComplete={() => deleteItem(i.id)}
-                onToggle={() => togglePinned(i)}
-                onArchive={() => toggleArchived(i.id)}
-              />
-            ))}
-        </div>
+  {items
+    .filter((item) => item.pinned)
+    .map((b) => (
+      <PinnedItem
+        {...b}
+        key={b.id}
+        onClick={() => {
+          setOpenModal(true);
+          setActiveItem(b.id);
+        }}
+        onComplete={() => deleteItem(b.id)}
+        onToggle={() => togglePinned(b.id)}
+        pinned={b.pinned}
+      />
+    ))}
+</div>
+<div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
+  {items
+    .filter((item) => !item.pinned)
+    .map((i) => (
+      <Item
+        {...i}
+        key={i.id}
+        onClick={() => {
+          console.log("clicked", i);
+          setOpenModal(true);
+          setActiveItem(i);
+        }}
+        onComplete={() => deleteItem(i.id)}
+        onToggle={() => togglePinned(i.id)}
+        onArchive={() => toggleArchived(i.id)}
+      />
+    ))}
+</div>
       </SortableContext>
     </DndContext>
   );
