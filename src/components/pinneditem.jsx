@@ -31,7 +31,7 @@ export function PinnedItem(props) {
       {...attributes}
       {...listeners}
     >
-      <div className="p-3 pb-2 text-zinc-300 whitespace-pre-wrap text-sm" onClick={props.onClick}>
+      <div className="p-3 pb-2 text-zinc-300 whitespace-pre-wrap text-sm">
         <div className="text-base text-white mb-2">
           {props.title} <br />
         </div>

@@ -7,7 +7,7 @@ export default function Sidebar({ setLabelPopup }) {
 
 
   return (
-    <div className="bg-[#100F0F] h-full fixed w-[5%] text-white ]">
+    <div className="bg-[#100F0F] h-full fixed w-[5%] text-white hidden lg:block">
       <div className="flex flex-col items-center">
         <div className="mb-16"></div>
 

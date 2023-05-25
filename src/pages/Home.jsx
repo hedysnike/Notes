@@ -285,9 +285,11 @@ export default function Home() {
       </LabelsModal>
       <div className="bg-black min-h-screen h-auto flex w-full overflow-hidden">
         <Sidebar setLabelPopup={setLabelPopup} />
-        <div className="h-full w-[5%]"></div>
+        <div className="h-full hidden lg:block lg:w-[5%]"></div>
+    
         {/* Sidebar Above Content Below */}
-        <div className="flex-none w-[95%]">
+     
+        <div className="lg:flex-none w-full lg:w-[95%]">
           <div className="flex justify-center mb-10">
             <div className="flex flex-col bg-[#100F0F] mt-16 rounded-xl shadow-md shadow-[#100F0F]">
               <input
@@ -376,24 +378,20 @@ function Items({ items, setItems, updatedescription, updateTitle, deleteItem, to
             {activeItem?.description}
           </div>
         </Modal>
-        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 mx-10 h-auto mb-16">
   {items
     .filter((item) => item.pinned)
     .map((b) => (
       <PinnedItem
         {...b}
         key={b.id}
-        onClick={() => {
-          setOpenModal(true);
-          setActiveItem(b.id);
-        }}
         onComplete={() => deleteItem(b.id)}
         onToggle={() => togglePinned(b.id)}
-        pinned={b.pinned}
+        pinned={b.pinned} 
       />
     ))}
 </div>
-<div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 mx-10 h-auto mb-16">
   {items
     .filter((item) => !item.pinned)
     .map((i) => (
