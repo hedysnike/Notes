@@ -393,7 +393,14 @@ function Items({ items, setItems, updatedescription, updateTitle, deleteItem, to
 </div>
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 mx-10 h-auto mb-16">
   {items
-    .filter((item) => !item.pinned)
+  .filter((item) => {
+    if (item.archived) {
+      return false;
+    } else if (item.pinned) {
+      return false;
+    }
+    return true;
+  })
     .map((i) => (
       <Item
         {...i}
