@@ -112,7 +112,7 @@ export default function Archive({ updatedescription, updateTitle, setLabelPopup 
           </Modal>
         </div>
         <div className="flex justify-center text-white mt-10 text-4xl">Archived</div>
-        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto mb-16 mt-24">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 mx-10 h-auto mb-16">
           {items
             .filter((i) => i.archived && !i.pinned)
             ?.map((a) => (

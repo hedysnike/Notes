@@ -163,7 +163,7 @@ export default function Labelsmap() {
         <div>
         </div>
         <div className="flex justify-center text-2xl text-white mb-10 mt-10">{filteredLabel.name}</div>
-        <div className="grid md:grid grid-cols-2 md:grid-cols-5 mx-20 h-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 mx-10 h-auto mb-16">
           {filteredItems.map((i) => (
             <Item {...i} key={i.id} onComplete={() => deleteItem(i.id)} />
           ))}
