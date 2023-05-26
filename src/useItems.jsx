@@ -16,20 +16,23 @@ export const useItemsProvider = () => {
   }, []);
 
   useEffect(() => {
-    setItems(JSON.parse(localStorage.getItem("items")) || []);
+    const storedItems = JSON.parse(localStorage.getItem("items"));
+    if (storedItems) {
+      setItems(storedItems);
+    }
   }, []);
 
-  function updatesetItem(items) {
-    localStorage.setItem("items", JSON.stringify(items));
-    setItems(items);
+  function updatesetItems(updatedItems) {
+    localStorage.setItem("items", JSON.stringify(updatedItems));
+    setItems(updatedItems);
   }
 
-  function updatesetPinned(pinned) {
-    localStorage.setItem("pinned", JSON.stringify(pinned));
-    setPinned(pinned);
+  function updatesetPinned(updatedPinned) {
+    localStorage.setItem("pinned", JSON.stringify(updatedPinned));
+    setPinned(updatedPinned);
   }
 
-  return { items, setItems: updatesetItem, pinned, setPinned: updatesetPinned };
+  return { items, setItems: updatesetItems, pinned, setPinned: updatesetPinned };
 };
 
 export const ItemsProvider = ({ children }) => {
